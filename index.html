@@ -132,8 +132,9 @@
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -202,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-30 11:40:41" itemprop="dateModified" datetime="2023-03-30T11:40:41+08:00">2023-03-30</time>
+      <time title="修改时间：2023-03-30 11:43:34" itemprop="dateModified" datetime="2023-03-30T11:43:34+08:00">2023-03-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,7 +227,7 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="Poj-3278"><a href="#Poj-3278" class="headerlink" title="Poj 3278"></a>Poj 3278</h1><p><a target="_blank" rel="noopener" href="http://poj.org/problem?id=3278">题目链接</a></p>
 <p><em>已知农夫坐标为N，母牛坐标为K。每次农夫有三种移动方式，即移动到$X-1,X+1,2X$上，问最少需要移动多少次农夫可以移动到K。</em></p>
-<p><strong>对于移动次数的最小值问题，通常采用$BFS$求解</strong>:  </p>
+<p><strong>对于移动次数的最小值问题，通常采用BFS求解</strong>:  </p>
 <p>​		即遍历每一层，如果当前层数得到目标方案，即中止搜索。该层的层高最低，次数最小。</p>
 <ul>
 <li>每次移动有三种选择，对应同一层的三种情况。</li>
