@@ -16,12 +16,12 @@
   <meta name="author" content="Hirox">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Solidity学习 由于大一立项的要求简洁的记录一下方便复习">
+    <meta name="description" content="Solidity学习由于大一立项的要求简洁的记录一下方便复习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Solidity学习">
 <meta property="og:url" content="http://example.com/2023/04/08/Solidity/index.html">
 <meta property="og:site_name" content="Hirox&#39;s blog">
-<meta property="og:description" content="Solidity学习 由于大一立项的要求简洁的记录一下方便复习">
+<meta property="og:description" content="Solidity学习由于大一立项的要求简洁的记录一下方便复习">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/blockchain.jpg">
 <meta property="article:published_time" content="2023-04-08T10:57:51.000Z">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          3k 字
         
       </span>
     
@@ -276,67 +276,54 @@
             
               <div class="markdown-body">
                 
-                <h1 id="solidity学习">Solidity学习</h1>
-<p>由于大一立项的要求简洁的记录一下方便复习</p>
+                <h1 id="Solidity学习"><a href="#Solidity学习" class="headerlink" title="Solidity学习"></a>Solidity学习</h1><p>由于大一立项的要求简洁的记录一下方便复习</p>
 <span id="more"></span>
-<h2 id="数据类型">数据类型</h2>
-<ul>
-<li>数值类型：调用时按值传递
-<ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li>数值类型：调用时按值传递<ul>
 <li>uint 无符号正整数(uint256的别名)</li>
-<li>int 有符号整数(int256的别名)</li>
+<li>int  有符号整数(int256的别名)</li>
 <li>int8 - int256(8到256位)</li>
 <li>uint8 - uint256 (8到256位)</li>
-<li>address 调用合约地址
-<ul>
+<li>address 调用合约地址<ul>
 <li><code>address</code>：保存一个20字节的值（以太坊地址的大小）。</li>
-<li><code>address payable</code> ：可支付地址，与 <code>address</code>
-相同，不过有成员函数 <code>transfer</code> 和 <code>send</code>
-<ul>
+<li><code>address payable</code> ：可支付地址，与 <code>address</code> 相同，不过有成员函数 <code>transfer</code> 和 <code>send</code><ul>
 <li>ap.transfer(10) 表示合约向ap转账10wei</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>bool 布尔类型</li>
-</ul></li>
-<li>引用类型：调用时按地址传递
-<ul>
+</ul>
+</li>
+<li>引用类型：调用时按地址传递<ul>
 <li>数组</li>
 <li>结构体</li>
 <li>函数</li>
 <li>映射</li>
-</ul></li>
 </ul>
-<h2 id="合约">合约</h2>
-<p>个人理解相当于C++中的类</p>
+</li>
+</ul>
+<h2 id="合约"><a href="#合约" class="headerlink" title="合约"></a>合约</h2><p>个人理解相当于C++中的类</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs solidity">// SPDX-License-Identifier: MIT  /*注释用来注明代码的软件许可*/<br>pragma solidity ^0.8.4;  //声明solidity的版本<br>contract HelloWeb3&#123;<br>	struct Student<br>	&#123;<br>		int data;<br>		string id;<br>	&#125;<br>    string public _string = &quot;Hello Web3!&quot;;  //合约的状态变量 相当于类的成员<br>    uint balance=0;<br>    uint []x=[1,2,3];<br>    function A()<br>    function B()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>引用类型</strong>在函数中都需要一个额外的标注来表明数据存储的位置：</p>
 <ul>
 <li>storage：存储在链上。合约的状态变量都默认存储在链上。</li>
 <li>memory：函数内的临时变量</li>
-<li>calldata：相当于c++的const
-函数参数的临时变量，且传进来不能被改变</li>
+<li>calldata：相当于c++的const   函数参数的临时变量，且传进来不能被改变</li>
 </ul>
-<p>注意：如果在函数内创建一个storage变量指向合约的状态变量（必须是引用类型），那么改变该变量的同时会改变合约的状态变量
-是指针还是复本：<span
-class="math inline">\(storage&gt;memory&gt;calldata\)</span>
-当被赋值的类型 ==赋值的类型时，才是指针</p>
+<p>注意：如果在函数内创建一个storage变量指向合约的状态变量（必须是引用类型），那么改变该变量的同时会改变合约的状态变量<br>是指针还是复本：$storage&gt;memory&gt;calldata$ 当被赋值的类型 ==赋值的类型时，才是指针</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs solidity">function()public pure <br>&#123;<br>	uint []storage x_1=x;<br>	x_1[1]=1;//此时balance也会变成1<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="函数">函数</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs solidity">function &lt;function name&gt; (&lt;parameter types&gt;) &#123;internal|external|public|private&#125;   [pure|view|payable] [returns (&lt;return types&gt;)]<br><br>function returnName () external pure returns(uint index,bool _bool)<br>&#123;<br>	return(12,true);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="映射">映射</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs solidity">mapping(uint=&gt;student)a; <br></code></pre></td></tr></table></figure>
-<p>key只能为数值类型 value可以是任何类型·</p>
-<h2 id="构造函数与修饰器">构造函数与修饰器</h2>
-<p>构造函数</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs solidity">function &lt;function name&gt; (&lt;parameter types&gt;) &#123;internal|external|public|private&#125;   [pure|view|payable] [returns (&lt;return types&gt;)]<br><br>function returnName () external pure returns(uint index,bool _bool)<br>&#123;<br>	return(12,true);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs solidity">mapping(uint=&gt;student)a; <br></code></pre></td></tr></table></figure>
+<p>key只能为数值类型<br>value可以是任何类型·</p>
+<h2 id="构造函数与修饰器"><a href="#构造函数与修饰器" class="headerlink" title="构造函数与修饰器"></a>构造函数与修饰器</h2><p>构造函数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs solidity">constructor(参数)  //用来对状态变量进行初始化<br>&#123;<br>	.....<br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>修饰器（<code>modifier</code>）是<code>solidity</code>特有的语法，类似于面向对象编程中的<code>decorator</code>，声明函数拥有的特性
-相当于执行函数前需要判断的条件</p>
+<p>修饰器（<code>modifier</code>）是<code>solidity</code>特有的语法，类似于面向对象编程中的<code>decorator</code>，声明函数拥有的特性<br>相当于执行函数前需要判断的条件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs solidity">// 定义modifier<br>modifier onlyOwner &#123;<br>   require(msg.sender == owner); // 检查调用者是否为owner地址<br>   _; // 如果是的话，继续运行函数主体；否则报错并revert交易<br>&#125;<br><br>//代有onlyOwner修饰符的函数只能被owner地址调用<br>function changeOwner(address _newOwner) external onlyOwner&#123;<br>   owner = _newOwner; // 只有owner地址运行这个函数，并改变owner<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="继承">继承</h2>
-<p><strong>继承格式</strong></p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p><strong>继承格式</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs solidity">contract A is B,C,D...<br>&#123;<br>		<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
-<li>如果B，C，D....之间仍然有继承关系，需要从辈分由高到低顺序排序</li>
+<li>如果B，C，D….之间仍然有继承关系，需要从辈分由高到低顺序排序</li>
 </ul>
 <p><strong>函数继承</strong></p>
 <ul>
@@ -356,15 +343,13 @@ class="math inline">\(storage&gt;memory&gt;calldata\)</span>
 <p><strong>调用父类的函数</strong></p>
 <ul>
 <li>直接调用：父类名.函数名( )</li>
-<li><code>super</code>关键字调用：super.函数名( )
-调用继承关系最亲近的那个父类的函数</li>
+<li><code>super</code>关键字调用：super.函数名( )  调用继承关系最亲近的那个父类的函数</li>
 </ul>
-<h2 id="抽象合约和接口">抽象合约和接口</h2>
-<p><strong>抽象合约</strong></p>
+<h2 id="抽象合约和接口"><a href="#抽象合约和接口" class="headerlink" title="抽象合约和接口"></a>抽象合约和接口</h2><p><strong>抽象合约</strong></p>
 <p>如果一个智能合约里至少有一个未实现的函数，即某个函数缺少主体<code>&#123;&#125;</code>中的内容，则必须将该合约标为<code>abstract</code>，不然编译会报错；另外，未实现的函数需要加<code>virtual</code>，以便子合约重写。如果我们还没想好具体怎么实现某个函数，那么可以把合约标为<code>abstract</code>，之后让别人补写上。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs solidity">abstract contract InsertionSort&#123;<br>    function insertionSort(uint[] memory a) public pure virtual returns(uint[] memory);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>接口</strong></p>
-<ol type="1">
+<ol>
 <li>不能包含状态变量</li>
 <li>不能包含构造函数</li>
 <li>不能继承除接口外的其他合约</li>
