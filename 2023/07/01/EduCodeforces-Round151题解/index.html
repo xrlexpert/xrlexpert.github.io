@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" href="/img/favicon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hirox">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="A-Forbidden Integer 题意：给定一个数字n，要求能否从1到k中任意选择数（不能选择1到k的一个数x，每个数可以选择0到无穷次）的和等于n（1&lt;&#x3D;x&lt;&#x3D;k&lt;&#x3D;n） 思路：任何正整数都是1的倍数，所以当x！&#x3D;1时，只需选择n个1即可。 当x等于1时，若k也等于1，此时无可供选择的数，无法组成。又知道，任意大于1的数都可以通过2，3两个数得到（奇偶性，非奇即偶）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EduCodeforces_Round151题解">
+<meta property="og:url" content="https://xrlexpert.github.io/2023/07/01/EduCodeforces-Round151%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hirox&#39;s blog">
+<meta property="og:description" content="A-Forbidden Integer 题意：给定一个数字n，要求能否从1到k中任意选择数（不能选择1到k的一个数x，每个数可以选择0到无穷次）的和等于n（1&lt;&#x3D;x&lt;&#x3D;k&lt;&#x3D;n） 思路：任何正整数都是1的倍数，所以当x！&#x3D;1时，只需选择n个1即可。 当x等于1时，若k也等于1，此时无可供选择的数，无法组成。又知道，任意大于1的数都可以通过2，3两个数得到（奇偶性，非奇即偶）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xrlexpert.github.io/img/">
+<meta property="article:published_time" content="2023-07-01T02:01:40.000Z">
+<meta property="article:modified_time" content="2023-07-02T14:57:20.516Z">
+<meta property="article:author" content="Hirox">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xrlexpert.github.io/img/">
+  
+  
+  
+  <title>EduCodeforces_Round151题解 - Hirox&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xrlexpert.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hirox&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="EduCodeforces_Round151题解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-01 10:01" pubdate>
+          2023年7月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">EduCodeforces_Round151题解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="a-forbidden-integer">A-Forbidden Integer</h1>
+<p>题意：给定一个数字n，要求能否从1到k中任意选择数（不能选择1到k的一个数x，每个数可以选择0到无穷次）的和等于n（1&lt;=x&lt;=k&lt;=n）</p>
+<p>思路：任何正整数都是1的倍数，所以当x！=1时，只需选择n个1即可。
+当x等于1时，若k也等于1，此时无可供选择的数，无法组成。又知道，任意大于1的数都可以通过2，3两个数得到（奇偶性，非奇即偶）。所以只需讨论k=2和k&gt;=3两种情况。k=2时，只能组成偶数，k=3时，组成任何大于等于2的数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-type">int</span> n,<span class="hljs-type">int</span> k,<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> count=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span>(x!=<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;YES\n&quot;</span>);<br>        count=n;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,count);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;1 &quot;</span>);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>   &#125;<br>   <span class="hljs-keyword">else</span><br>   &#123;<br>      <span class="hljs-keyword">if</span>(k==<span class="hljs-number">1</span>)<br>      &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;NO\n&quot;</span>);<br>      &#125;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(k&gt;=<span class="hljs-number">3</span>&amp;&amp;n%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>) <br>      &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;YES\n&quot;</span>);<br>        <span class="hljs-type">int</span> x=n/<span class="hljs-number">2</span>;<br>        count=x;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,count);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=count<span class="hljs-number">-1</span>;i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;2 &quot;</span>);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;3\n&quot;</span>);<br>      &#125;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(k&gt;=<span class="hljs-number">3</span>&amp;&amp;n%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>) <br>      &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;YES\n&quot;</span>);<br>        <span class="hljs-type">int</span> x=n/<span class="hljs-number">2</span>;<br>        count=x;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,count);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=count;i++)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;2 &quot;</span>);<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>      &#125;<br>      <span class="hljs-keyword">else</span> <br>      &#123;<br>        <span class="hljs-keyword">if</span>(n%<span class="hljs-number">2</span>==<span class="hljs-number">1</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;NO\n&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;YES\n&quot;</span>);<br>            count=n/<span class="hljs-number">2</span>;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,count);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=count;i++)<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;2 &quot;</span>);<br>            &#125;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>        &#125;<br>      &#125;<br>   &#125;<br><br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> t;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>,&amp;t);<br>    <span class="hljs-type">int</span> n,k,x;<br>    <span class="hljs-keyword">while</span>(t--)<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;k,&amp;x);<br>        <span class="hljs-built_in">solve</span>(n,k,x);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="b-come-together">B-Come Together</h1>
+<p>简单题 略</p>
+<h1 id="c-strong-password">C-Strong Password</h1>
+<p>题意：给出两个长度为m的字符串a，b（都为数字），要求密码对应位的数字介于
+<span class="math inline">\(a_{i},b_{i}\)</span>
+之间，且密码不能是字符串base的子序列。求问能否找到这样一串的密码。</p>
+<p>思路：这道题一开始我思路就跑偏了，用的DFS做。但题目只需要求找到一串，所以不用判断所有的字符串是否满足。那么我们只需分析<strong>最有可能是密码的特征</strong>是什么，针对这一串密码检验就好。将密码的m位依次来看，第<span
+class="math inline">\(i\)</span>位密码在base中出现的位置一定在 <span
+class="math inline">\(i-1\)</span>位置之后，我们要越可能得到密码，那么我们就需要当前第<span
+class="math inline">\(i\)</span>位数字在base中的位置越往后越好，这样密码才不容易是base的子序列。</p>
+<p><strong>贪心</strong></p>
+<ul>
+<li>对于第i位，遍历密码可能的每个数字，判断该数字在base中出现的位置</li>
+<li>取在base最靠后的位置作为第i+1位的接着判断的base开始位</li>
+<li>如果i&lt;m时，已经超过了base的长度那么这串密码不是base的子序列</li>
+</ul>
+<p>时间复杂度：<span class="math inline">\(O(nmD) D=l-r\)</span></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> tag=<span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> ans[<span class="hljs-number">11</span>];<br><span class="hljs-type">int</span> ne[<span class="hljs-number">10</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> t;<br>    cin&gt;&gt;t;<br>    <span class="hljs-keyword">while</span>(t--)<br>    &#123;<br>        tag=<span class="hljs-number">0</span>;<br>        string base;<br>        cin&gt;&gt;base;<br>        <span class="hljs-type">int</span> m;<br>        cin&gt;&gt;m;<br>        string a;<br>        string b;<br>        cin&gt;&gt;a&gt;&gt;b;<br>        <span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> n=base.<span class="hljs-built_in">size</span>();<br>        ne[<span class="hljs-number">0</span>]=<span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<br>        &#123;<br>            <span class="hljs-type">int</span> l=a[i<span class="hljs-number">-1</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;<br>            <span class="hljs-type">int</span> r=b[i<span class="hljs-number">-1</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;<br>            <span class="hljs-type">int</span> k_r=ne[i<span class="hljs-number">-1</span>]+<span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=l;j&lt;=r;j++)<br>            &#123;<br>                <span class="hljs-type">int</span> k=ne[i<span class="hljs-number">-1</span>]+<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">while</span>(k&lt;n&amp;&amp;(base[k]-<span class="hljs-string">&#x27;0&#x27;</span>)!=j) k++;<br>                k_r=<span class="hljs-built_in">max</span>(k,k_r);<br>            &#125;<br>            ne[i]=k_r;<br>            <span class="hljs-keyword">if</span>(k_r&gt;=n) <br>            &#123;<br>                tag=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(k_r==n<span class="hljs-number">-1</span>&amp;&amp;i&lt;=m<span class="hljs-number">-1</span>)<br>            &#123;<br>                tag=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br><br>        &#125;<br>        <span class="hljs-keyword">if</span>(tag==<span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;NO\n&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;YES\n&quot;</span>);<br>        &#125;<br><br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>进一步思考，while循环内的查找能否在O（1）的时间复杂度做到呢？对于从某个位置开始往后查找特定的数字，我们可以预处理一个数组
+<span class="math inline">\(next[i][j]\)</span> 表示从第<span
+class="math inline">\(i\)</span>位开始的下一个数字j的位置，该步时间复杂为<span
+class="math inline">\(O(nD)\)</span></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">10</span>;j++) <span class="hljs-comment">//初始化</span><br>&#123;<br>      	<span class="hljs-keyword">if</span>(j!=s[n<span class="hljs-number">-1</span>]-<span class="hljs-string">&#x27;0&#x27;</span>)<br>	    ne[n<span class="hljs-number">-1</span>][j]=n;<br>&#125;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) <span class="hljs-comment">//初始化</span><br>&#123;<br>	    ne[i][s[i]-<span class="hljs-string">&#x27;0&#x27;</span>]=i;<br>&#125;   <br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">1</span>;i--)<br>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">10</span>;j++)<br>	&#123;<br>         <span class="hljs-keyword">if</span>(j!=s[i<span class="hljs-number">-1</span>]-<span class="hljs-string">&#x27;0&#x27;</span>)<br>		 ne[i<span class="hljs-number">-1</span>][j]=ne[i][j];<br>	 &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="d-rating-system">D-Rating System</h1>
+<p>题意：给定一段分数变化序列<span class="math inline">\(a_{i}\)</span>
+,<span
+class="math inline">\(i\)</span>从1到n。你可以设定一个值k，score初始为0分。当score&lt;k,时，<span
+class="math inline">\(score+=a_{i}\)</span>
+,一旦score到达了k，从这之后，若 <span
+class="math inline">\(score+a_{i}&lt;k,则score=k\)</span>，否则<span
+class="math inline">\(score+=a_{i}\)</span>
+。求问在最终分数最高情况下k的取值为多少。</p>
+<p>思路1：score需要累加达到k后，才能不低于k。所以k的取值范围为<span
+class="math inline">\(a_{i}\)</span>的n个前缀和。令k=s[i],这之后score不会小于k，对于从i后的每个位置t，score一定等于k+（后面所有的和-中间下降到k以下的部分）=k+某个后缀和。对于最后的结果，score一定是从k开始加直到加到末尾。问题转化为score=k+max(suf[t])
+时间复杂度为<span class="math inline">\(O(n)\)</span></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ll long long</span><br><span class="hljs-type">int</span> n;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> t;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>,&amp;t);<br>    <span class="hljs-keyword">while</span>(t--)<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>,&amp;n);<br>        vector&lt;ll&gt;<span class="hljs-built_in">a</span>(n+<span class="hljs-number">5</span>);<br>        vector&lt;ll&gt;<span class="hljs-built_in">s</span>(n+<span class="hljs-number">5</span>);<br>        vector&lt;ll&gt;<span class="hljs-built_in">suf</span>(n+<span class="hljs-number">5</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        &#123;<br>            <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>,&amp;a[i]);<br>            s[i]=s[i<span class="hljs-number">-1</span>]+a[i];<br>        &#125;<br>        ll temp=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n;i&gt;=<span class="hljs-number">0</span>;i--)<br>        &#123;<br>            temp+=a[i]; <br>            suf[i]=<span class="hljs-built_in">max</span>(suf[i+<span class="hljs-number">1</span>],temp); <span class="hljs-comment">//从i个位置开始的最大后缀和</span><br>        &#125;<br>        ll k=s[<span class="hljs-number">0</span>];<br>        ll score=suf[<span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(score&lt;=s[i]+suf[i+<span class="hljs-number">1</span>])<br>            &#123;<span class="hljs-number">700</span><br>                score=s[i]+suf[i+<span class="hljs-number">1</span>];<br>                k=s[i];<br>            &#125;<br>        &#125;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>,k);<br>        <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>思路2：假设不附加k，那么score就为<span
+class="math inline">\(a_{1}+a_{2}+a_{3}+...a_{n}\)</span>
+附加该规则后，我们从某一个时间t开始的一小段最大连续下落区间就不起作用
+score=<span
+class="math inline">\(a_{1}+a_{2}+...a_{l-1}+a_{r+1}+...+a_{n}\)</span>,问题转化为求解最小子块和</p>
+<p><img src="..\..\themes\fluid\source\img\educf151.png" srcset="/img/loading.gif" lazyload width=700 align=left></p>
+<h1 id="e-boxes-and-balls">E-Boxes and Balls</h1>
+<p>学完dp后再写</p>
+<h1 id="f-swimming-pool">F-Swimming Pool</h1>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" class="category-chain-item">算法学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/algorithm/">#algorithm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>EduCodeforces_Round151题解</div>
+      <div>https://xrlexpert.github.io/2023/07/01/EduCodeforces-Round151题解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hirox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/28/Python/" title="“Python”">
+                        <span class="hidden-mobile">“Python”</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
