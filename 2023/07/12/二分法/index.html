@@ -16,16 +16,16 @@
   <meta name="author" content="Hirox">
   <meta name="keywords" content="">
   
-    <meta name="description" content="核心思想 设答案所在范围为\([l,r]\) ,所求为t则题目一定满足： \(\begin{cases}  &amp; \text true &amp; \text{ if } x\ge t \\\\  &amp; \text flase &amp; \text{ if } x&lt;t \end{cases}\) 即定义域左端保持一个性质，右端保持另外一个性质 题型  求最大，">
+    <meta name="description" content="核心思想设答案所在范围为$[l,r]$ ,所求为t则题目一定满足： $\begin{cases}  &amp; \text true &amp; \text{ if } x\ge t \\  &amp; \text flase  &amp; \text{ if } x&lt;t\end{cases}$ 即定义域左端保持一个性质，右端保持另外一个性质 题型 求最大，最小平均值 求最大中位数 最大和的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二分法">
 <meta property="og:url" content="https://xrlexpert.github.io/2023/07/12/%E4%BA%8C%E5%88%86%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hirox&#39;s blog">
-<meta property="og:description" content="核心思想 设答案所在范围为\([l,r]\) ,所求为t则题目一定满足： \(\begin{cases}  &amp; \text true &amp; \text{ if } x\ge t \\\\  &amp; \text flase &amp; \text{ if } x&lt;t \end{cases}\) 即定义域左端保持一个性质，右端保持另外一个性质 题型  求最大，">
+<meta property="og:description" content="核心思想设答案所在范围为$[l,r]$ ,所求为t则题目一定满足： $\begin{cases}  &amp; \text true &amp; \text{ if } x\ge t \\  &amp; \text flase  &amp; \text{ if } x&lt;t\end{cases}$ 即定义域左端保持一个性质，右端保持另外一个性质 题型 求最大，最小平均值 求最大中位数 最大和的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xrlexpert.github.io/img/algorithm.jpg">
 <meta property="article:published_time" content="2023-07-12T02:29:58.000Z">
-<meta property="article:modified_time" content="2023-07-13T14:40:53.482Z">
+<meta property="article:modified_time" content="2023-08-31T08:49:49.106Z">
 <meta property="article:author" content="Hirox">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          5.2k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          30 分钟
+          44 分钟
         
       </span>
     
@@ -276,107 +276,69 @@
             
               <div class="markdown-body">
                 
-                <h1 id="核心思想">核心思想</h1>
-<p>设答案所在范围为<span class="math inline">\([l,r]\)</span>
-,所求为t则题目一定满足：</p>
-<p><span class="math inline">\(\begin{cases}  &amp; \text true &amp;
-\text{ if } x\ge t \\\\  &amp; \text flase &amp; \text{ if } x&lt;t
-\end{cases}\)</span></p>
+                <h1 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h1><p>设答案所在范围为$[l,r]$ ,所求为t则题目一定满足：</p>
+<p>$\begin{cases}<br>  &amp; \text true &amp; \text{ if } x\ge t \\<br>  &amp; \text flase  &amp; \text{ if } x&lt;t<br>\end{cases}$</p>
 <p><strong>即定义域左端保持一个性质，右端保持另外一个性质</strong></p>
-<h1 id="题型">题型</h1>
-<ul>
+<h1 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h1><ul>
 <li>求最大，最小平均值</li>
 <li>求最大中位数</li>
 <li>最大和的最小值min(max)</li>
 </ul>
-<h1 id="check函数方法">check函数方法</h1>
-<ul>
+<h1 id="check函数方法"><a href="#check函数方法" class="headerlink" title="check函数方法"></a>check函数方法</h1><ul>
 <li>贪心（前提能保证结果正确，一般不设置选法就可以用贪心）</li>
 <li>dp(要限制选法)</li>
 <li>直接函数：如求解一元三次方程的解</li>
 </ul>
-<h1 id="求最大最小平均值">求最大(最小)平均值</h1>
-<p><strong>题目描述：</strong> <a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1570">P1570 KC 喝咖啡 -
-洛谷</a></p>
-<p>现在有$ n$ 种调料，这杯咖啡只可以加入其中的 <span
-class="math inline">\(m\)</span> 种（当然 KC 一定会加入 m
-种，不会加入少于 m
-种的调料）根据加入的调料不同，制成这杯咖啡要用的时间也不同，得到的咖啡的美味度也不同。</p>
-<p>KC 在得知所有的 <em>n</em>
-种调料后，作为曾经的化竞之神的他，马上就知道了所有调料消耗的时间 <span
-class="math inline">\(c_{i}\)</span>以及调料的美味度 <span
-class="math inline">\(v_{i}\)</span>。由于 KC
-急着回去刷题，所以他想尽快喝到这杯咖啡，但他又想喝到美味的咖啡，所以他想出了一个办法，他要喝到<span
-class="math inline">\(\frac{\sum v_{i}}{\sum
-c_{i}}\)</span>最大的咖啡，请你帮他变成解决</p>
+<h1 id="求最大-最小-平均值"><a href="#求最大-最小-平均值" class="headerlink" title="求最大(最小)平均值"></a>求最大(最小)平均值</h1><p><strong>题目描述：</strong> <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1570">P1570 KC 喝咖啡 - 洛谷 </a></p>
+<p>现在有$ n$ 种调料，这杯咖啡只可以加入其中的 $m$ 种（当然 KC 一定会加入 m 种，不会加入少于 m 种的调料）根据加入的调料不同，制成这杯咖啡要用的时间也不同，得到的咖啡的美味度也不同。</p>
+<p>KC 在得知所有的 <em>n</em> 种调料后，作为曾经的化竞之神的他，马上就知道了所有调料消耗的时间 $c<em>{i}$以及调料的美味度 $v</em>{i}$。由于 KC 急着回去刷题，所以他想尽快喝到这杯咖啡，但他又想喝到美味的咖啡，所以他想出了一个办法，他要喝到$\frac{\sum v<em>{i}}{\sum c</em>{i}}$最大的咖啡，请你帮他变成解决</p>
 <p><strong>思想：</strong></p>
 <ul>
-<li><p>普适结论：设枚举的数为x，如果x小于等于最大平均值，那么一定存在一种方案使得<span
-class="math inline">\(x\le \frac{\sum_{n}^{m}
-a_{i}}{m-n+1}\)</span>，即存在<span class="math inline">\(\sum_{n}^{m}
-(a_{i}-x) \ge 0\)</span> ,即<span class="math inline">\(\sum_{n}^{m}
-(a_{i}-x)的最大值 \ge 0\)</span>
-,进一步贪心得到最大值再与0进行比较</p></li>
-<li><p>得到结论：<span class="math inline">\(\begin{cases}  &amp; \text
-存在一种方案使得\sum_{n}^{m} (a_{i}-x) \ge 0 &amp; \text{ if } x\le ans
-\\\\  &amp; \text 不存在一种方案使得\sum_{n}^{m} (a_{i}-x) \ge 0 &amp;
-\text{ if } x&gt;ans \end{cases}\)</span></p></li>
+<li><p>普适结论：设枚举的数为x，如果x小于等于最大平均值，那么一定存在一种方案使得$x\le \frac{\sum<em>{n}^{m} a</em>{i}}{m-n+1}$，即存在$\sum<em>{n}^{m} (a</em>{i}-x) \ge 0$ ,即$\sum<em>{n}^{m} (a</em>{i}-x)的最大值 \ge 0$ ,进一步贪心得到最大值再与0进行比较</p>
+</li>
+<li><p>得到结论：$\begin{cases}<br>  &amp; \text 存在一种方案使得\sum<em>{n}^{m} (a</em>{i}-x) \ge 0 &amp; \text{ if } x\le ans \\<br>  &amp; \text 不存在一种方案使得\sum<em>{n}^{m} (a</em>{i}-x) \ge 0  &amp; \text{ if } x&gt;ans<br>\end{cases}$</p>
+</li>
 </ul>
-<p>而这道题中分母为<span
-class="math inline">\(\sum_{n}^{m}c_{i}\)</span>
-,我们转化为存在一个方案<span
-class="math inline">\(x\sum_{n}^{m}c_{i}-\sum_{n}^{m}
-a_{i}&lt;0\)</span>，贪心得到最小值再与0比较判断</p>
+<p>而这道题中分母为$\sum<em>{n}^{m}c</em>{i}$ ,我们转化为存在一个方案$x\sum<em>{n}^{m}c</em>{i}-\sum<em>{n}^{m} a</em>{i}&lt;0$，贪心得到最小值再与0比较判断</p>
 <p><strong>代码：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n,m;<br><span class="hljs-type">double</span> s[<span class="hljs-number">201</span>];<br><span class="hljs-type">const</span> <span class="hljs-type">double</span> eps=<span class="hljs-number">1e-7</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">coffee</span><br>&#123;<br>    <span class="hljs-type">double</span> v;<br>    <span class="hljs-type">double</span> c;<br>&#125;co[<span class="hljs-number">201</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">judge</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++ )<br>    &#123;<br>      s[i]=x*co[i].c-co[i].v;<br>    &#125;<br>    <span class="hljs-built_in">sort</span>(s+<span class="hljs-number">1</span>,s+<span class="hljs-number">1</span>+n);<span class="hljs-comment">//排序再贪心得到最小的前m个和</span><br>    <span class="hljs-type">double</span> sum=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<br>    &#123;<br>        sum+=s[i];<br>    &#125;<br>    <span class="hljs-keyword">return</span> sum&lt;<span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin&gt;&gt;n&gt;&gt;m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        cin&gt;&gt;co[i].v;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        cin&gt;&gt;co[i].c;<br>    &#125;<br>    <span class="hljs-type">double</span> l=<span class="hljs-number">0</span>;<br>    <span class="hljs-type">double</span> r=co[<span class="hljs-number">1</span>].v/co[<span class="hljs-number">1</span>].c;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        r=<span class="hljs-built_in">max</span>(r,co[i].v/co[i].c);<br>    &#125;<br>    <span class="hljs-keyword">while</span>(r-l&gt;eps)<br>    &#123;<br>        <span class="hljs-type">double</span> mid=(l+r)/<span class="hljs-number">2.0</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">judge</span>(mid))<br>        &#123;<br>            l=mid;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            r=mid;<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.3lf&quot;</span>,l);<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="求最大中位数">求最大中位数</h1>
-<p><strong>题目描述：</strong><a
-target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc236/tasks/abc236_e">ABC：E -
-Average and Median</a></p>
-<p><em>n</em> 个数排成一列。现在要选出一些数，满足
-<strong>任意两个相邻的数中至少有一个数被选择</strong>。</p>
+<h1 id="求最大中位数"><a href="#求最大中位数" class="headerlink" title="求最大中位数"></a>求最大中位数</h1><p><strong>题目描述：</strong><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc236/tasks/abc236_e">ABC：E - Average and Median </a></p>
+<p><em>n</em> 个数排成一列。现在要选出一些数，满足 <strong>任意两个相邻的数中至少有一个数被选择</strong>。</p>
 <p>请求出：</p>
 <ul>
-<li>所有选择方案中，被选中的数字平均值的最大值，误差在 <span
-class="math inline">\(10^{-3}\)</span>以内视为正确；</li>
-<li>所有选择方案中，被选中的数字中位数的的最大值。在这里，偶数
-2k个数的中位数视作第 k 小的数。</li>
+<li>所有选择方案中，被选中的数字平均值的最大值，误差在 $10^{-3}$以内视为正确；</li>
+<li>所有选择方案中，被选中的数字中位数的的最大值。在这里，偶数 2k个数的中位数视作第 k 小的数。</li>
 </ul>
 <p><strong>思想：</strong></p>
 <p>dp+二分</p>
-<p>设枚举的数为x，预处理题目序列 <span
-class="math inline">\(\begin{cases}  &amp; \text b[i]=1 &amp; \text{ if
-} a[i]&gt;x\\  &amp; \text b[i]=0 &amp; \text{ if } a[i]=x\\  &amp;
-\text b[i]=-1 &amp; \text{ if } a[i]&lt;x\end{cases}\)</span>
-,使得小于x的都为-1，大于x都为1,等于x都为0。
-如果当前数x小于等于最大中位数，则存在一种方案使得<span
-class="math inline">\(\sum_{n}^{m}b[i] &gt;=0\)</span> ，即<span
-class="math inline">\(max(\sum_{n}^{m}b[i])\ge0\)</span></p>
+<p>设枚举的数为x，预处理题目序列 $\begin{cases}<br>  &amp; \text b[i]=1 &amp; \text{ if } a[i]&gt;x\<br>  &amp; \text b[i]=0  &amp; \text{ if } a[i]=x\<br>  &amp; \text b[i]=-1  &amp; \text{ if } a[i]<x\end{cases}$ ,使得小于x的都为-1，大于x都为1,等于x都为0。
+如果当前数x小于等于最大中位数，则存在一种方案使得$\sum_{n}^{m}b[i] >=0$ ，即$max(\sum_{n}^{m}b[i])\ge0$</p>
 <p>得到结论</p>
-<p><span class="math inline">\(\begin{cases}  &amp; \text
-存在一种方案使得max(\sum_{n}^{m}b[i])\ge0 &amp; \text{ if } x\le ans
-\\\\  &amp; \text 不存在一种方案使得max(\sum_{n}^{m}b[i])\ge0 &amp;
-\text{ if } x&gt;ans \end{cases}\)</span></p>
+<p>$\begin{cases}<br>  &amp; \text 存在一种方案使得max(\sum<em>{n}^{m}b[i])\ge0 &amp; \text{ if } x\le ans \\<br>  &amp; \text 不存在一种方案使得max(\sum</em>{n}^{m}b[i])\ge0  &amp; \text{ if } x&gt;ans<br>\end{cases}$</p>
 <ul>
 <li>处理平均数：每个数减去x，转化为求和大于等于0</li>
 <li>处理中位数：分为大于等于小于x来设定贡献值</li>
 </ul>
 <p><strong>代码：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">judge_average</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        s[i]=a[i]-x;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        dp[i][<span class="hljs-number">0</span>]=dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">1</span>];<br>        dp[i][<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">0</span>],dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">1</span>])+s[i];<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">max</span>(dp[n][<span class="hljs-number">0</span>],dp[n][<span class="hljs-number">1</span>])&gt;=<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">judge_mid</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(a[i]&gt;x)<br>        &#123;<br>            s[i]=<span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(a[i]&lt;x)<br>        &#123;<br>            s[i]=<span class="hljs-number">-1</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            s[i]=<span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        dp[i][<span class="hljs-number">0</span>]=dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">1</span>];<br>        dp[i][<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">0</span>],dp[i<span class="hljs-number">-1</span>][<span class="hljs-number">1</span>])+s[i];<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">max</span>(dp[n][<span class="hljs-number">0</span>],dp[n][<span class="hljs-number">1</span>])&gt;=<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="求最大值的最小值">求最大值的最小值</h1>
-<p><strong>题目描述：</strong><a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1182">P1182 数列分段 Section
-II</a></p>
-<p>对于给定的一个长度为N的正整数数列 ，现要将其分成
-M段，并要求每段连续，求每段和的最大值最小。</p>
+<h1 id="求最大值的最小值max（min）"><a href="#求最大值的最小值max（min）" class="headerlink" title="求最大值的最小值max（min）"></a>求最大值的最小值max（min）</h1><p><strong>关键</strong>：每次枚举k，</p>
+<ul>
+<li>求最大值：若$k&lt;=题目中的定义$，则存在方案  , k继续变大</li>
+<li>求最小值：若$k&gt;=题目中的定义$，则存在方案，k继续变小</li>
+</ul>
+<p><strong>题目描述：</strong><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1182">P1182 数列分段 Section II</a></p>
+<p>对于给定的一个长度为N的正整数数列 ，现要将其分成 M段，并要求每段连续，求每段和的最大值最小。</p>
 <p><strong>思想：</strong></p>
-<p>设枚举的每段和的最大值为x，若<span class="math inline">\(x \ge
-ans\)</span> ,则存在分割方式，若<span class="math inline">\(x &lt;
-ans\)</span>,则不存在切割方式。
-check函数的话我们尽可能让每段的和都接近x，因为如果某一段不够接近x，那么这之后的某一段和肯定要变大。如果划分了k&gt;=M段，那么说明这个x还不够大，x需要变大来使得k更靠近M。如果k&lt;M,说明x太大，需要变小。</p>
+<p>设枚举的每段和的最大值为x，若$x \ge ans$ ,则存在分割方式，若$x &lt; ans$,则不存在切割方式。<br>check函数的话我们尽可能让每段的和都接近x，因为如果某一段不够接近x，那么这之后的某一段和肯定要变大。如果划分了k&gt;=M段，那么说明这个x还不够大，x需要变大来使得k更靠近M。如果k&lt;M,说明x太大，需要变小。</p>
 <p><strong>代码</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">judge</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> num=<span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> k=<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> sum=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(k&lt;=n)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(sum+a[k]&lt;=x)<br>        &#123;<br>            sum+=a[k];<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            num+=<span class="hljs-number">1</span>;<br>            sum=a[k];<br>        &#125;<br>        k++;<br>    &#125;<br>    num+=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(num&lt;=m)<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>题目描述</strong>：<a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc215/tasks/abc215_f">Atcoder ABC 215 F - Dist Max 2 </a></p>
+<p>给定n个二维坐标点，规定两两坐标的距离$d=min(|x<em>{i}-x</em>{j}|,|{y<em>{i}-y</em>{j}|})$,求这些d中的最大值</p>
+<p><strong>思路</strong>:</p>
+<p>对于max(min)问题，要首先想到二分法。针对这道题目。设答案为ans，则这些点中一定存在$min(|x<em>{i}-x</em>{j}|,|{y<em>{i}-y</em>{j}|})\ge ans$ 即 $|x<em>{i}-x</em>{j}|{\ge} ans 且|y<em>{i}-y</em>{j}|\ge ans$</p>
+<p>如果想要在$O(n)$的时间复杂度内判断，则我们需要对每个i来判断。不妨假设$x<em>{i}$ 固定不动，分析针对这个点需要满足什么条件才能判断ans。首先对于$x</em>{i}$,不需要考虑$[x<em>{i}-ans+1,x</em>{i}+ans-1]$ 的位置，因为这些距离$x<em>{i}$已经小于ans，肯定不存在$min(|x</em>{i}-x<em>{j}|,|{y</em>{i}-y<em>{j}|})\ge ans$ 的情况,针对于需要考虑的j位置，因为$|x</em>{i}-x<em>{j}|已经满足\ge ans$,所以只要这些位置中有一个点的$|y</em>{i}-y<em>{j}|满足\ge ans$即可，而这可以通过$x</em>{i}-ans$及其以前的对应y的最大值和最小值来判断。又因为对称性，$x<em>{i}+ans=x</em>{j}$ 等价于$x<em>{j}-ans=x</em>{i}$,所以其实只需将x从小到大遍历，每次判断$0到x_{i}-ans$ 的范围对应的y的最大最小值即可，这里可以用<strong>滑动窗口</strong>的思想。</p>
+<p><strong>代码</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> N 200001</span><br><span class="hljs-type">int</span> n;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span><br>&#123;<br>    <span class="hljs-type">int</span> x;<br>    <span class="hljs-type">int</span> y;<br>    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-type">const</span> node &amp;a)<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;x &lt; a.x;<br>    &#125;<br>&#125;a[N];<br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>&#123; <br>    queue&lt;node&gt;q;<br>    <span class="hljs-type">int</span> min_y=<span class="hljs-number">1e+9</span>+<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> max_y=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>       <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>()&amp;&amp;q.<span class="hljs-built_in">front</span>().x&lt;=a[i].x-k)<br>       &#123;<br>            min_y=<span class="hljs-built_in">min</span>(min_y,q.<span class="hljs-built_in">front</span>().y);<br>            max_y=<span class="hljs-built_in">max</span>(max_y,q.<span class="hljs-built_in">front</span>().y);<br>            q.<span class="hljs-built_in">pop</span>();<br>       &#125;<br>       <span class="hljs-keyword">if</span>(a[i].y&gt;=min_y+k||a[i].y&lt;=max_y-k)<br>       &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>       &#125;<br>       q.<span class="hljs-built_in">push</span>(a[i]);<br><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>&#125;   <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin&gt;&gt;n;<br>    <span class="hljs-type">int</span> min_x=<span class="hljs-number">1e+9</span>+<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> max_x=<span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> min_y=<span class="hljs-number">1e+9</span>+<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> max_y=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    &#123;<br>        cin&gt;&gt;a[i].x&gt;&gt;a[i].y;<br>        min_x=<span class="hljs-built_in">min</span>(min_x,a[i].x);<br>        max_x=<span class="hljs-built_in">max</span>(max_x,a[i].x);<br>        min_y=<span class="hljs-built_in">min</span>(min_y,a[i].y);<br>        max_y=<span class="hljs-built_in">max</span>(max_y,a[i].y);<br>    &#125;<br>    <span class="hljs-built_in">sort</span>(a+<span class="hljs-number">1</span>,a+<span class="hljs-number">1</span>+n);<br>    <span class="hljs-type">int</span> r=<span class="hljs-built_in">min</span>(max_x-min_x,max_y-min_y);<br>    <span class="hljs-type">int</span> l=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(l&lt;r)<br>    &#123;<br>        <span class="hljs-type">int</span> mid=(l+r+<span class="hljs-number">1</span>)&gt;&gt;<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid))<br>        &#123;<br>            l=mid;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            r=mid<span class="hljs-number">-1</span>;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;l&lt;&lt;endl;<br>    <br><br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -473,6 +435,12 @@ check函数的话我们尽可能让每段的和都接近x，因为如果某一�
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/07/18/ABC212/" title="ABC212">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ABC212</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
