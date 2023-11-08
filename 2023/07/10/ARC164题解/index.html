@@ -16,12 +16,12 @@
   <meta name="author" content="Hirox">
   <meta name="keywords" content="">
   
-    <meta name="description" content="A：数学，进制 B：图论 C：博弈论  Tasks - AtCoder Regular Contest 164 A - Ternary Decomposition题目描述：给定一个数N，请问能否恰好使用K个 $3^{m}$ (m&gt;&#x3D;0)的形式的数相加来表示 收获：  看到$2^{m}，3^{m}$ 这种联想到进制表示，即将十进制转化为3进制表示  N用三进制表示的数每个位上数字累加之和S，">
+    <meta name="description" content="A：数学，进制 B：图论 C：博弈论  Tasks - AtCoder Regular Contest 164 A - Ternary Decomposition **题目描述：**给定一个数N，请问能否恰好使用K个 3m3^{m}3m (m&gt;&#x3D;0)的形式的数相加来表示 收获：   看到2m，3m2^{m}，3^{m}2m，3m 这种联想到进制表示，即将十进制转化为3进制表示   N用三进">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARC164题解">
 <meta property="og:url" content="https://xrlexpert.github.io/2023/07/10/ARC164%E9%A2%98%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hirox&#39;s blog">
-<meta property="og:description" content="A：数学，进制 B：图论 C：博弈论  Tasks - AtCoder Regular Contest 164 A - Ternary Decomposition题目描述：给定一个数N，请问能否恰好使用K个 $3^{m}$ (m&gt;&#x3D;0)的形式的数相加来表示 收获：  看到$2^{m}，3^{m}$ 这种联想到进制表示，即将十进制转化为3进制表示  N用三进制表示的数每个位上数字累加之和S，">
+<meta property="og:description" content="A：数学，进制 B：图论 C：博弈论  Tasks - AtCoder Regular Contest 164 A - Ternary Decomposition **题目描述：**给定一个数N，请问能否恰好使用K个 3m3^{m}3m (m&gt;&#x3D;0)的形式的数相加来表示 收获：   看到2m，3m2^{m}，3^{m}2m，3m 这种联想到进制表示，即将十进制转化为3进制表示   N用三进">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xrlexpert.github.io/img/algorithm.jpg">
 <meta property="article:published_time" content="2023-07-10T04:37:08.000Z">
@@ -44,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          380 字
+          440 字
         
       </span>
     
@@ -282,21 +284,25 @@
 <li>C：博弈论</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc164/tasks">Tasks - AtCoder Regular Contest 164</a></p>
-<h1 id="A-Ternary-Decomposition"><a href="#A-Ternary-Decomposition" class="headerlink" title="A - Ternary Decomposition"></a>A - Ternary Decomposition</h1><p><strong>题目描述：</strong>给定一个数N，请问能否恰好使用K个 $3^{m}$ (m&gt;=0)的形式的数相加来表示</p>
+<h1>A - Ternary Decomposition</h1>
+<p>**题目描述：**给定一个数N，请问能否恰好使用K个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">3^{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span></span> (m&gt;=0)的形式的数相加来表示</p>
 <p><strong>收获：</strong></p>
 <ul>
-<li><p>看到$2^{m}，3^{m}$ 这种联想到进制表示，即将十进制转化为3进制表示</p>
+<li>
+<p>看到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>m</mi></msup><mtext>，</mtext><msup><mn>3</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">2^{m}，3^{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span></span> 这种联想到进制表示，即将十进制转化为3进制表示</p>
 </li>
-<li><p>N用三进制表示的数每个位上数字累加之和S，含义为N至少要由S个$3^{m}$ 形</p>
+<li>
+<p>N用三进制表示的数每个位上数字累加之和S，含义为N至少要由S个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">3^{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span></span> 形</p>
 <p>式来表示</p>
 </li>
 </ul>
 <blockquote>
-<p> 例如:$5=12_{(3)}=3^{1}+2*3^{0}$,而S=1+2=3。所以5至少需要3个这样数字才能表示。</p>
+<p>例如:<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>=</mo><mn>1</mn><msub><mn>2</mn><mrow><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow></msub><mo>=</mo><msup><mn>3</mn><mn>1</mn></msup><mo>+</mo><mn>2</mn><mo>∗</mo><msup><mn>3</mn><mn>0</mn></msup></mrow><annotation encoding="application/x-tex">5=12_{(3)}=3^{1}+2*3^{0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9996em;vertical-align:-0.3552em;"></span><span class="mord">1</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mtight">3</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3552em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span></span></span></span></span>,而S=1+2=3。所以5至少需要3个这样数字才能表示。</p>
 </blockquote>
-<p>而$3^{1}=3*3^{0}$，每有一个$3^{1}$变为3个$3^{0}$可以增加两个数<br>类似递推，高次方都可以多贡献偶数个个数出来</p>
+<p>而<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>1</mn></msup><mo>=</mo><mn>3</mn><mo>∗</mo><msup><mn>3</mn><mn>0</mn></msup></mrow><annotation encoding="application/x-tex">3^{1}=3*3^{0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span></span></span></span></span>，每有一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>1</mn></msup></mrow><annotation encoding="application/x-tex">3^{1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>变为3个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>0</mn></msup></mrow><annotation encoding="application/x-tex">3^{0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span></span></span></span></span>可以增加两个数<br>
+类似递推，高次方都可以多贡献偶数个个数出来</p>
 <ul>
-<li>结论：N可由{S，S+2,S+4……S+2n(S+2n==N)}  个数字来表示，即大于等于S且和N同奇偶性的个数。</li>
+<li>结论：N可由{S，S+2,S+4…S+2n(S+2n==N)}  个数字来表示，即大于等于S且和N同奇偶性的个数。</li>
 </ul>
 
                 
@@ -460,7 +466,6 @@
 
   
   
-
 
 
 
@@ -668,49 +673,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
