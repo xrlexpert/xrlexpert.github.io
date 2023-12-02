@@ -1,6 +1,6 @@
 ---
 title: EduCodeforces_Round151题解
-index_img: /img/algorithm.jpg
+index_img: /img/banner/algorithm.jpg
 date: 2023-07-01 10:01:40
 tags:
 - algorithm
@@ -8,9 +8,13 @@ categories:
 - 算法学习
 ---
 
-[Dashboard - Educational Codeforces Round 151 (Rated for Div. 2) - Codeforces](https://codeforces.com/contest/1845)
 
-# A-Forbidden Integer
+
+# 比赛链接
+
+​    [Dashboard - Educational Codeforces Round 151 (Rated for Div. 2) - Codeforces](https://codeforces.com/contest/1845)
+
+## A-Forbidden Integer
 
 题意：给定一个数字n，要求能否从1到k中任意选择数（不能选择1到k的一个数x，每个数可以选择0到无穷次）的和等于n（1<=x<=k<=n）
 
@@ -99,11 +103,11 @@ int main()
 }
 ```
 
-# B-Come Together
+## B-Come Together
 
 简单题 略
 
-# C-Strong Password
+## C-Strong Password
 
 题意：给出两个长度为m的字符串a，b（都为数字），要求密码对应位的数字介于 $a_{i},b_{i}$ 之间，且密码不能是字符串base的子序列。求问能否找到这样一串的密码。
 
@@ -201,9 +205,7 @@ for(int i=n-1;i>=1;i--)
 }
 ```
 
-
-
-# D-Rating System
+## D-Rating System
 
 题意：给定一段分数变化序列$a_{i}$ ,$i$从1到n。你可以设定一个值k，score初始为0分。当score<k,时，$score+=a_{i}$ ,一旦score到达了k，从这之后，若 $score+a_{i}<k,则score=k$，否则$score+=a_{i}$ 。求问在最终分数最高情况下k的取值为多少。
 
@@ -258,9 +260,9 @@ int main()
 
 ![](/img/educf151.png)
 
-# E-Boxes and Balls
+## E-Boxes and Balls
 
 学完dp后再写
 
-# F-Swimming Pool
+## F-Swimming Pool
 

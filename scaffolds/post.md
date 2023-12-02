@@ -3,5 +3,5 @@ title: {{ title }}
 date: {{ date }}
 tags:
 categories:
-index_img: /img/
+index_img: /img/banner/
 ---

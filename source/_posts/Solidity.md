@@ -5,7 +5,7 @@ tags:
 - solidity
 categories:
 - 大一立项
-index_img: /img/blockchain.jpg
+index_img: /img/banner/blockchain.jpg
 ---
 
 # Solidity学习

@@ -1,6 +1,6 @@
 ---
 title: Python
-index_img: /img/python.jpg
+index_img: /img/banner/python.jpg
 date: 2023-06-28 22:16:14
 tags:
 - python
