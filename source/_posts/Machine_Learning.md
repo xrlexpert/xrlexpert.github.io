@@ -11,6 +11,64 @@ tags:
 
 ![](/img/machine_learning/regression_exap.png)
 
+专业术语：
+
+**training set**：训练集
+$x$:input variable  or input feature
+$y$:output variable or target variable
+$(x,y)$:single training example
+$(x^{i},y^{i})$:$i^{th}$  training example
+$m$：训练集数据大小
+
 ## 回归问题（Regression）
 
 给定x，预测x对应的数字y(y的取值为无穷)
+
+### 一元线性回归
+
+$f(x)=wx+b$
+$w.b$:coeffient,weights
+
+**损失函数**：$J(w,b)= \frac{1}{2m} \sum _{1}^{m} (\hat{y}-y)^{2}$
+![](/img/machine_learning/visual_cost.png)
+
+$goal:minize(J(w,b))$
+
+### 梯度下降法
+
+#### 前置知识
+
+首先需要复习一下方向导数和梯度的概念：
+**方向导数**：若函数$z=f(x,y)$在$P(x,y)$ 某一邻域有定义，自P点沿周围360度任一方向引出有向直线L，定义方向导数为
+
+$$ \frac{\alpha z}{\alpha l} |_{(x,y)} = \lim_{\rho \to 0} \frac{\Delta z}{\Delta 自变量}= \lim_{\rho \to 0} \frac{f(x+\Delta x,y+\Delta y)-f(x,y)}{\sqrt{x^{2}+y^{2}}} (\rho =\sqrt{x^{2}+y^{2}})$$  
+
+特别地，当$z=f(x,y)$在$P(x,y)$ 可微分，则$z=f(x,y)$沿任一方向的方向导数都存在，且
+
+$$\frac{\alpha z}{\alpha l} |_{(x,y)} = \frac{\alpha z}{\alpha x}cos{\alpha}+\frac{\alpha z}{\alpha y}cos{\beta} =\{\frac{\alpha z}{\alpha x},\frac{\alpha z}{\alpha y} \}\cdot \{cos{\alpha},cos{\beta}\}$$
+
+故当方向$\vec {l}=\{cos{\alpha},cos{\beta}\}$ 和 $\{\frac{\alpha z}{\alpha x},\frac{\alpha z}{\alpha y}\}$ 同向时，方向导数最大，函数沿此方向增长得最快,
+**梯度**：$gard f=\{\frac{\alpha z}{\alpha x},\frac{\alpha z}{\alpha y} \}$，表示函数在该点增长最快的方向
+
+#### 算法描述
+
+梯度下降法即每次迭代，都使得$(J(w,b))$中的参数沿着梯度的反方向移动，使得函数下降得最快。
+$w=w-\alpha \cdot \frac{\alpha J}{\alpha w}$
+$b=b-\alpha \cdot \frac{\alpha J}{\alpha b}$
+其中$\alpha$ 称为学习率，$\in (0,1)$
+
+## 分类问题(Classfication)
+
+给定x,预测x对应的类别y（取值范围为种类数）
+
+# 无监督学习（unsupervised learning）
+
+find things in unlabled data
+
+the data comes only with inputs x but not output labels y, and the algorithm has to find some structure or some pattern or something interesting in the data
+
+## 聚类问题
+
+## 异常检测
+
+## 降维
