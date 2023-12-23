@@ -1,6 +1,6 @@
 ---
 index_img: /img/banner/machine_learning.jpg 
-title: Machine Learning
+title: Machine Learning-一元线性回归
 date: 2023-12-02 23:43:42
 tags:
 ---
@@ -56,6 +56,12 @@ $$\frac{\alpha z}{\alpha l} |_{(x,y)} = \frac{\alpha z}{\alpha x}cos{\alpha}+\fr
 $w=w-\alpha \cdot \frac{\alpha J}{\alpha w}$
 $b=b-\alpha \cdot \frac{\alpha J}{\alpha b}$
 其中$\alpha$ 称为学习率，$\in (0,1)$
+
+* 如果$\alpha$太小， 收敛速度很慢
+* 如果$\alpha$ 太大，最终可能在min附近反复横跳，永远达不到最小值
+
+**但对于固定的学习率来讲梯度下降法得到的函数最小值和初值有关，每次得到是初值附近的局部最优解**
+**然而对于一元线性回归来讲，其损失函数是一个凹函数（convex function）,其极小值点只有一个，故梯度下降法在此适用**
 
 ## 分类问题(Classfication)
 

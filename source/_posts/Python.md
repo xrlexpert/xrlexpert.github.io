@@ -35,7 +35,7 @@ python可以交互式编程
 * /表示除法
 * *乘法
 
-### 布尔操作符
+#### 布尔操作符
 
 * and
 * or
@@ -49,6 +49,11 @@ False
 >>not not not False #not可以嵌套
 True
 ```
+
+#### 成员操作符
+
+* in：如果在指定的序列中找到值返回 True，否则返回 False
+* not in：如果在指定的序列中没有找到值返回 True，否则返回 False。
 
 ### 数据类型
 
@@ -80,6 +85,10 @@ True
 
 ### if语句
 
+* if
+* elif
+* else
+
 ```python
 if 条件 :
 	.....
@@ -88,6 +97,23 @@ elif 条件:
 else 条件:
 	....
 ```
+
+### match语句
+
+* 等价于c语言中的case
+
+```python
+match a:
+    case 1:
+        print("a=1")
+	case 2:
+        print("a=2")
+    case _:
+        print("a!=1&&a!=2")
+    
+```
+
+
 
 ### while循环
 
@@ -111,6 +137,8 @@ for i in range(5): #i从0到4
 
 ## 字符串，字典，列表
 
+**字符串**
+
 ```python
 a='I love you'
 ```
@@ -119,4 +147,87 @@ a='I love you'
 
 * $a[i:j]$ 若是从左往右，则表示从下标为i一直到j-1( 0-len-1）；若是从右往左，下标从-1开始
 * $a[i:j:step]$ ：从i开始，步长为step取，直到j-1
-* 
+
+**字典dict**
+**字典的key可以是任何不可变的（也就是可以通过哈希每次得到的结果不变）对象**：如整数，字符串
+
+但mutable tpye(可变类型)如列表list，set，dict都不能作为key
+
+* 不可变对象：调用对象自身的任意方法，也不会改变该对象自身的内容。相反，这些方法会创建新的对象并返回，这样，就保证了不可变对象本身永远是不可变的。
+
+```python
+>>> a='abc'
+>>>a.replace('a','A')
+'Abc'
+>>>a
+'abc'
+```
+
+字符串a中的任何函数都是创建一个新的变量b使得b为更改后的值并且返回b，对应字符串a本身并未发生任何改变。a的地址没变
+
+添加方式：
+
+1.直接添加
+
+```python
+a['xiaoming']=0
+```
+
+2.变量添加
+
+```python
+x="hello"
+y=5
+a[x]=y #a["hello"]=5
+```
+
+内置函数
+
+* dict.clear()删除字典内所有元素
+* dict.get(key,default=None) 返回指定键的值，如果键不存在则返回default的默认值
+* in成员运算符（not in），key $in$ dic:如果key在dic的键中，则返回True，否则返回False
+* dic.pop(key):删除键值和对应的value
+
+## 函数
+
+规范：
+
+```python
+def FuntionName(arguement):
+    return x,y
+```
+
+如果想要在函数内部给全局变量赋值，而不是新开一个变量，需要使用`global`语句告诉pyhton 该变量是全局变量中的a
+
+* def关键字
+* 函数名
+* 参数名
+* 返回值，可以返回多个值
+
+举例：
+
+```python
+def change():
+	global a
+    a=9
+a=10
+change()
+print(a)
+```
+
+> 输出结果应该为9
+
+
+
+### 函数内嵌
+
+在函数中定义函数
+
+```python
+def A(arguement):
+	......
+	def B():
+		return 
+	
+	return B
+```
