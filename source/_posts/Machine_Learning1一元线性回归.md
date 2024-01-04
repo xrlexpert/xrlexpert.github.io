@@ -1,6 +1,6 @@
 ---
 index_img: /img/banner/machine_learning.jpg 
-title: Machine Learning-一元线性回归
+title: Machine Learning 1 一元线性回归
 date: 2023-12-02 23:43:42
 tags:
 ---
@@ -53,8 +53,8 @@ $$\frac{\alpha z}{\alpha l} |_{(x,y)} = \frac{\alpha z}{\alpha x}cos{\alpha}+\fr
 #### 算法描述
 
 梯度下降法即每次迭代，都使得$(J(w,b))$中的参数沿着梯度的反方向移动，使得函数下降得最快。
-$w=w-\alpha \cdot \frac{\alpha J}{\alpha w}$
-$b=b-\alpha \cdot \frac{\alpha J}{\alpha b}$
+$w=w-\alpha \cdot \frac{\alpha J}{\alpha w}=w-\alpha \cdot \frac{1}{m}\sum_{1}^{m}(f_{w,b}(x_{i})-y_{i})x_{i}$
+$b=b-\alpha \cdot \frac{\alpha J}{\alpha b}=b-\alpha \cdot \frac{1}{m}\sum_{1}^{m}(f_{w,b}(x_{i})-y_{i})$
 其中$\alpha$ 称为学习率，$\in (0,1)$
 
 * 如果$\alpha$太小， 收敛速度很慢
