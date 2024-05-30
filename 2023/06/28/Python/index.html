@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xrlexpert.github.io/img/banner/python.jpg">
 <meta property="article:published_time" content="2023-06-28T14:16:14.000Z">
-<meta property="article:modified_time" content="2023-12-24T03:41:31.389Z">
+<meta property="article:modified_time" content="2024-01-10T19:33:24.300Z">
 <meta property="article:author" content="Hirox">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.2k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          17 分钟
+          19 分钟
         
       </span>
     
@@ -409,9 +409,17 @@
 <blockquote>
 <p>输出结果应该为9</p>
 </blockquote>
+<h3 id="函数传参">函数传参</h3>
+<p>python 函数的参数传递：</p>
+<ul>
+<li>**不可变类型：**类似 C++ 的值传递，如整数、字符串、元组。如 fun(a)，传递的只是 a 的值，没有影响 a 对象本身。如果在 fun(a) 内部修改 a 的值，则是新生成一个 a 的对象。</li>
+<li>**可变类型：**类似 C++ 的引用传递，如 列表，字典。如 fun(la)，则是将 la 真正的传过去，修改后 fun 外部的 la 也会受影响</li>
+</ul>
+<p>python 中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象。</p>
 <h3 id="函数内嵌">函数内嵌</h3>
 <p>在函数中定义函数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">A</span>(<span class="hljs-params">arguement</span>):<br>	......<br>	<span class="hljs-keyword">def</span> <span class="hljs-title function_">B</span>():<br>		<span class="hljs-keyword">return</span> <br>	<br>	<span class="hljs-keyword">return</span> B<br></code></pre></td></tr></table></figure>
+<h2 id="正则表达式">正则表达式</h2>
 
                 
               </div>
