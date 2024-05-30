@@ -28,7 +28,28 @@ $m$是数据的组数，$n$是一组数据的维度
 
 ![](/img/machine_learning/prove.png)
 
-## 优化方法
+## 梯度下降法分类
+
+### 批梯度下降（batch gradient descent）
+
+计算出所有样本的误差之和再更新参数
+
+$w_{j}=w_{j}-\sum_{i=1}^{m}(f(x)-y^{(i)})x_{j}^{(i)}$
+
+* 保证一定可以收敛到损失函数的全局最优
+
+### 随机梯度下降（stochastic gradient descent）
+
+计算出一个样本的误差就更新参数
+
+$for\space i=1\space to \space m:$
+
+$\space w_{j}=w_{j}-(f(x)-y^{(i)})x_{j}^{(i)}$
+
+* 这种算法不一定保证能够收敛到损失函数的全局最优，但实践得出大部分情况下所得答案都和全局最优解近似
+* 计算速度比批梯度下降法快，适用于数据量比较大的情况
+
+## 梯度下降优化方法
 
 ### 特征压缩
 
@@ -129,3 +150,38 @@ plt.xlabel("X"); plt.ylabel("y"); plt.legend(); plt.show()
 **注意事项**：
 
 * 由于代码中没有对X特征归一化，当学习率较高(>1e-7)时，python数据会爆，再一次说明了特征压缩的重要性
+
+**使用scikit-learn实现**
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import SGDRegressor
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+x = np.arange(0,19,1)
+X_train = x.reshape(-1,1)
+y_train = 1+x+x**2
+
+X_norm = scaler.fit_transform(X_train) #特征压缩
+print(f"{np.ptp(X_train,axis=0)}") 
+print(f"{np.ptp(X_norm,axis=0)}")
+
+sgdr = SGDRegressor(max_iter=1000) #构建线性回归模型
+sgdr.fit(X_norm, y_train) #根据所给数据进行训练
+
+b_norm = sgdr.intercept_ #获取训练得到的截断
+w_norm = sgdr.coef_ #获取训练得到的系数
+
+y_pred_sgd = sgdr.predict(X_norm)  #得到预测结果
+
+fig,ax=plt.subplots(1,2,figsize=(12,6),sharey=True)
+for i in range(len(ax)):
+    ax[i].scatter(X_train[:],y_train, label = 'target')
+    ax[i].scatter(X_train[:],y_pred_sgd, label = 'predict')
+ax[0].set_ylabel("Price"); ax[0].legend()
+fig.suptitle("target versus prediction using z-score normalized model")
+plt.show()
+```
+

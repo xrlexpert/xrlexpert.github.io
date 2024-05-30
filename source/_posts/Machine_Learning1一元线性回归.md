@@ -13,7 +13,7 @@ tags:
 
 专业术语：
 
-**training set**：训练集
+training set：训练集
 $x$:input variable  or input feature
 $y$:output variable or target variable
 $(x,y)$:single training example
