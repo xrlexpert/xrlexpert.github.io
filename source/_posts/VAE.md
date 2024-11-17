@@ -126,5 +126,63 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 
 ![regularization](/img/VAE/regular.png)
 
+{% note success %}
+
+两个高斯分布的KL散度公式推导：
+
+假设$P \sim N(u_p, \sigma_p), Q\sim N(u_q, \sigma_q)$
+$$
+\begin{align*}
+D_{KL}(P || Q) &= \int_z p(z) \log \frac{\frac{1}{\sqrt{2\pi \sigma_p^2}} e^{-\frac{(z-\mu_p)^2}{2\sigma_p^2}}}{\frac{1}{\sqrt{2\pi \sigma_q^2}} e^{-\frac{(z-\mu_q)^2}{2\sigma_q^2}}} dz \\
+&= \int_z p(z) \left[ \frac{1}{2} \log\left(\frac{\sigma_q^2}{\sigma_p^2}\right) 
+- \frac{(z-\mu_p)^2}{2\sigma_p^2} + \frac{(z-\mu_q)^2}{2\sigma_q^2} \right] dz.
+\end{align*}
+$$
+逐项计算：
+
+1. 第一项：
+   $$
+   \int_z p(z) \frac{1}{2} \log\left(\frac{\sigma_q^2}{\sigma_p^2}\right) dz 
+   = \frac{1}{2} \log\left(\frac{\sigma_q^2}{\sigma_p^2}\right)
+   $$
+
+2. 第二项：
+   $$
+   \begin{align*}
+   \int_z p(z) \frac{(z-\mu_p)^2}{2\sigma_p^2} dz 
+   &= \frac{1}{2\sigma_p^2} \int_z p(z) (z-\mu_p)^2 dz \\
+   &= \frac{1}{2\sigma_p^2} \operatorname{Var}(P) = \frac{1}{2}.
+   \end{align*}
+   $$
 
 
+3. 第三项：
+   $$
+   \begin{align*}
+   \int_z p(z) \frac{(z-\mu_q)^2}{2\sigma_q^2} dz 
+   &= \frac{1}{2\sigma_q^2} \int_z p(z) \left[z^2 - 2\mu_q z + \mu_q^2 \right] dz \\
+   &= \frac{1}{2\sigma_q^2} \left[\sigma_p^2 + \mu_p^2 - 2\mu_q \mu_p + \mu_q^2 \right].
+   \end{align*}
+   $$
+
+综上：
+$$
+D_{KL}(P || Q) = \frac{1}{2} \left[ \log\left(\frac{\sigma_q^2}{\sigma_p^2}\right)  + \frac{\sigma_p^2}{\sigma_q^2}  + \frac{(\mu_p - \mu_q)^2}{\sigma_q^2} - 1 \right]
+$$
+
+
+如果P,Q服从多维高斯分布
+$$
+\begin{align*}
+D_{\text{KL}}(P \| Q) = 
+\frac{1}{2} \Big[ 
+\log \frac{\det \Sigma_p}{\det \Sigma_q} 
++ \operatorname{tr}(\Sigma_q^{-1} \Sigma_p) 
++ (\mu_p - \mu_q)^\top \Sigma_q^{-1} (\mu_p - \mu_q)
+- d
+\Big]
+\end{align*}
+$$
+
+
+{% endnote %}
