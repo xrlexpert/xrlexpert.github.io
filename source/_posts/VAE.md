@@ -23,25 +23,27 @@ categories:
 
 原始的AE思想很简单
 
-- 用encoder原数据压缩，压缩后的特征可是视作隐式变量，之后再用decoder还原
+- 用encoder原数据压缩，压缩后的特征可视作隐式变量z，之后再用decoder还原
 
-![image.png](/img/VAE/AE.png)
+![Auto Encoder](/img/VAE/AE.png)
 
-但需要注意的是，AE压缩后的特征z是离散的（可以视作$\{z_1, z_2, ...z_n\}$）其能表示的空间有限，例如$z_1 = [1,20,0.5,19]$,如果这里第一维改成0.5，如果生成器在训练的时候没有见过，则生成出来的效果可能不佳。
+AE的缺点：
 
-能生成的X分布（离散的）：
+* AE压缩后的特征z是离散的（可以视作$\{z_1, z_2, ...z_n\}$）其能表示的空间有限，例如$z_1 = [1,20,0.5,19]$,如果这里第一维改成0.5，如果生成器在训练的时候没有见过，则生成出来的效果可能不佳。
 
-$P(X) = \sum_z P(X|z)P(z)$
+* 解释说明： $P(X) = \sum_z P(X|z)P(z)$
 
-![P(x|m)即为图中P(x)中蓝色部分，P(m)则是多项式分布是离散的。](/img/VAE/AE_px.png)
+​	![P(x|m)即为图中P(x)中蓝色部分，P(m)则是多项式分布是离散的。](/img/VAE/AE_px.png)
 
-- 基于该**离散**的方式所能生成的P(X)能力有限
+- 基于该**离散**的方式所能生成的$P(X)$能力有限
 
 ok，想到这里，要想获得好的**生成**, 我们想尽可能地扩大隐式变量z的空间，怎么做呢？
 
+VAE:
+
 - 与其让神经网络生成基于样本x对应的特征z（一个向量），我们不如让神经网络学习基于样本x的**隐式z的分布**（一个分布）不就好了嘛
 
-![difference.png](/img/VAE/difference.png)
+![difference](/img/VAE/difference.png)
 
 接下来就是我们的VAE之旅
 
@@ -92,7 +94,7 @@ $$
 
 但在VAE中，取$q(z) = p_\theta(z|x)$这一步是做不到的，因为$p_\theta(z|x)$的解析式我们无法得出
 
-![explain.png](/img/VAE/gpt.png)
+![explaination](/img/VAE/gpt.png)
 
 - 注意上图中$p_{\theta}(z) = p(z)$
 
@@ -118,11 +120,11 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 
 - 重构项：
 
-![reconstruction.png](/img/VAE/reconstruct.png)
+![reconstruction](/img/VAE/reconstruct.png)
 
 - 正则项：
 
-![regularization.png](/img/VAE/regular.png)
+![regularization](/img/VAE/regular.png)
 
 
 
