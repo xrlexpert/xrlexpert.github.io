@@ -1397,7 +1397,7 @@ figure.highlight td.code > pre {
 .markdown-body p > a > img,
 .markdown-body figure > img,
 .markdown-body figure > a > img {
-  max-width: 90%;
+  max-width: 50%;
   margin: 1.5rem auto;
   display: block;
   box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
@@ -1468,7 +1468,7 @@ post-custom {
 .page-content img,
 .post-content img {
   object-fit: cover;
-  max-width: 50%;
+  max-width: 100%;
 }
 @media (max-width: 767px) {
   .page-content,
