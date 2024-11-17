@@ -37,7 +37,7 @@ $P(X) = \sum_z P(X|z)P(z)$
 
 - 基于该**离散**的方式所能生成的P(X)能力有限
 
-ok，想到这里，要想获得好的**生成，**我们想尽可能地扩大隐式变量z的空间，怎么做呢？
+ok，想到这里，要想获得好的**生成**, 我们想尽可能地扩大隐式变量z的空间，怎么做呢？
 
 - 与其让神经网络生成基于样本x对应的特征z（一个向量），我们不如让神经网络学习基于样本x的**隐式z的分布**（一个分布）不就好了嘛
 
@@ -80,7 +80,7 @@ $$
 
 学长已经说的很好了
 
-[链接]([https://xyfjason.top/blog-main/2022/08/23/EM%E7%AE%97%E6%B3%95/](https://xyfjason.top/blog-main/2022/08/23/EM%E7%AE%97%E6%B3%95/))
+[链接](https://xyfjason.top/blog-main/2022/08/23/EM%E7%AE%97%E6%B3%95/)
 
 总结EM
 
@@ -112,9 +112,9 @@ $$
 
 同时令$p_{\theta}(z)$为我们的先验分布$N(0,I)$
 
-- 由于两个都是最大化ELBO，故VAE的Loss函数可以写为-ELBO
+- 由于两个都是最大化ELBO，且在使用梯度下降法时每次更新都是基于上一次的参数做调整，与这里的固定异曲同工。故VAE的Loss函数可以写为-ELBO
 
-$\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z)} logp_{\theta}(x|z) + D_{kl}(q_{\phi}(z)||p(z))$
+$\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x|z) + D_{kl}(q_{\phi}(z)||p(z))$
 
 - 重构项：
 
