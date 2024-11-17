@@ -3,6 +3,8 @@ index_img: /img/banner/machine_learning.jpg
 title: Machine Learning 1 一元线性回归
 date: 2023-12-02 23:43:42
 tags:
+categories:
+- [ML]
 ---
 
 # 监督学习（supervised learning)

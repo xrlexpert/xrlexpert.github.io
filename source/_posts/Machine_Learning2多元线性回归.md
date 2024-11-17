@@ -4,6 +4,7 @@ index_img: /img/banner/machine_learning.jpg
 date: 2023-12-24 00:32:42
 tags:
 categories:
+- [ML]
 ---
 
 # 多元线性回归

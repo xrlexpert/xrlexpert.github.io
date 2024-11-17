@@ -1,5 +1,5 @@
 ---
-title: Machine_Learning 3 逻辑回归
+title: Machine Learning 3 逻辑回归
 index_img: /img/banner/machine_learning.jpg 
 date: 2024-05-30 22:21:47
 tags:
@@ -17,7 +17,7 @@ categories:
 
 构造逻辑回归函数：
 
-$$h_{\theta}(x) = g(\theta x) = \frac{1}{1+e^{-\theta x}}$$
+$$h_{\theta}(x) = g(z) = g(\theta x) = \frac{1}{1+e^{-\theta x}}$$
 
 > $sigmoid$ 函数：
 >
@@ -28,6 +28,16 @@ $$h_{\theta}(x) = g(\theta x) = \frac{1}{1+e^{-\theta x}}$$
 > $g(z)^{’} = g(z)(1-g(z))$
 
 则$p(y|x) = h_{\theta}(x)^{y}[1-h_{\theta}(x)]^{1-y}$
+
+我们定义：
+
+$if \space h_{\theta}(x) >= 0.5, y = 1 \\ else \space y = 0$ 
+
+进而问题转化为
+
+$z >= 0 => y = 1$
+
+$z < 0 => y =0$
 
 ## 代价函数
 
@@ -47,3 +57,6 @@ $$
 $$
 
 > 与线性回归的偏导形式一样，具体原因参考CS229指数族部分讲解
+
+* 从概率角度推导逻辑二分类问题的代价函数
+* 但为何不采用MSE [为什么分类问题的损失函数采用交叉熵而不是均方误差MSE？ - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/104130889)
