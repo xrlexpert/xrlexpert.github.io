@@ -122,6 +122,12 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 
 ![reconstruction](/img/VAE/reconstruct.png)
 
+通常一个MSE即可
+$$
+L2(x, p_{\theta}(x|z))
+$$
+
+
 - 正则项：
 
 ![regularization](/img/VAE/regular.png)
@@ -129,6 +135,8 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 {% note success %}
 
 两个高斯分布的KL散度公式推导：
+
+注意:对于连续变量的最大似然估计时，我们采用的是概率密度而不是概率
 
 假设$P \sim N(u_p, \sigma_p), Q\sim N(u_q, \sigma_q)$
 $$
@@ -186,3 +194,150 @@ $$
 
 
 {% endnote %}
+
+将$P \sim N(u_{\phi}, \sigma_{\phi})$, $Q \sim N(0,I)$代入
+
+* 在实际VAE实现中简化为不同维度是独立的，故协方差矩阵只有对角线上存在值。公式简化为d个一维高斯分布的散度之和
+
+$$
+D_{KL}(q_{\phi}(z|x)|| N(0,I)) = \sum^d_{i=1} \frac{1}{2}[log(\sigma_{\phi_i})^2 + \sigma_{\phi_i}^2 + u_{\phi_i}^2 -1]
+$$
+
+
+
+```python
+class VAE(torch.nn.Module):
+  def __init__(self, input_dim, hidden_dims, decode_dim=-1, use_sigmoid=True):
+      '''
+      input_dim: The dimensionality of the input data.
+      hidden_dims: A list of hidden dimensions for the layers of the encoder and decoder.
+      decode_dim: (Optional) Specifies the dimensions to decode, if different from input_dim.
+      '''
+      super().__init__()
+
+      self.z_size = hidden_dims[-1] // 2
+
+      encoder_layers = []
+      decoder_layers = []
+      counts = defaultdict(int)
+
+      def add_encoder_layer(name: str, layer: torch.nn.Module) -> None:
+        encoder_layers.append((f"{name}{counts[name]}", layer))
+        counts[name] += 1
+      def add_decoder_layer(name: str, layer: torch.nn.Module) -> None:
+        decoder_layers.append((f"{name}{counts[name]}", layer))
+        counts[name] += 1
+      input_channel = input_dim
+      encoder_dims = hidden_dims
+      for x in hidden_dims:
+        add_encoder_layer("mlp", torch.nn.Linear(input_channel, x))
+        add_encoder_layer("relu",  torch.nn.LeakyReLU())
+        input_channel = x
+
+      decoder_dims = encoder_dims[::-1]
+      input_channel = self.z_size
+      for x in decoder_dims:
+        add_decoder_layer("mlp", torch.nn.Linear(input_channel, x))
+        add_decoder_layer("relu",  torch.nn.LeakyReLU())
+        input_channel = x
+      self.fc_mean = torch.nn.Sequential(
+            torch.nn.Linear(encoder_dims[-1], self.z_size),
+            torch.nn.LeakyReLU(),
+            torch.nn.Linear(self.z_size, self.z_size),
+        )
+      self.fc_var = torch.nn.Sequential(
+            torch.nn.Linear(encoder_dims[-1], self.z_size),
+            torch.nn.LeakyReLU(),
+            torch.nn.Linear(self.z_size, self.z_size),
+        )
+      self.encoder = torch.nn.Sequential(OrderedDict(encoder_layers))
+      self.decoder = torch.nn.Sequential(OrderedDict(decoder_layers))
+      self.out_layer = torch.nn.Sequential(
+            torch.nn.Flatten(),
+            torch.nn.Linear(decoder_dims[-1], input_dim),
+            torch.nn.Tanh(),
+      )
+
+      ##################
+      ### Problem 2(b): finish the implementation for encoder and decoder
+      ##################
+
+  def encode(self, x):
+      res = self.encoder(x)
+      mean = self.fc_mean(res)
+      logvar = self.fc_var(res)
+      return mean, logvar
+
+  def reparameterize(self, mean, logvar, n_samples_per_z=1):
+      ##################
+      ### Problem 2(c): finish the implementation for reparameterization
+      ##################
+      d, latent_dim = mean.size()
+      device = mean.device  # This will ensure the device of 'mean' is used for others
+
+      # Ensure all tensors are on the same device
+      std = torch.exp(0.5 * logvar).to(device)  # Move std to the same device as 'mean'
+      epsilon = torch.randn(d, latent_dim, device=device)  # Move epsilon to the same device
+
+      z = mean + std * epsilon  # Apply the reparameterization trick
+
+      return z
+
+
+  def decode(self, z):
+      probs = self.decoder(z)
+      out = self.out_layer(probs)
+      return out
+
+  def forward(self, x, n_samples_per_z=1):
+      mean, logvar = self.encode(x)
+
+      batch_size, latent_dim = mean.shape
+      if n_samples_per_z > 1:
+        mean = mean.unsqueeze(1).expand(batch_size, n_samples_per_z, latent_dim)
+        logvar = logvar.unsqueeze(1).expand(batch_size, n_samples_per_z, latent_dim)
+
+        mean = mean.contiguous().view(batch_size * n_samples_per_z, latent_dim)
+        logvar = logvar.contiguous().view(batch_size * n_samples_per_z, latent_dim)
+
+      z = self.reparameterize(mean, logvar, n_samples_per_z)
+      x_probs = self.decode(z)
+
+      x_probs = x_probs.reshape(batch_size, n_samples_per_z, -1)
+      x_probs = torch.mean(x_probs, dim=[1])
+
+      return {
+          "imgs": x_probs,
+          "z": z,
+          "mean": mean,
+          "logvar": logvar
+      }
+
+### Test
+hidden_dims = [128, 64, 36, 18, 18]
+input_dim = 256
+test_tensor = torch.randn([1, input_dim]).to(device)
+
+vae_test = VAE(input_dim, hidden_dims).to(device)
+
+with torch.no_grad():
+  test_out = vae_test(test_tensor)
+  print(test_out)
+
+```
+
+重构损失就是MSE在此略，正则损失则为：
+
+```python
+##### Loss 2: KL w/o Estimation #####
+def loss_KL_wo_E(output):
+    var = torch.exp(output['logvar'])
+    logvar = output['logvar']
+    mean = output['mean']
+
+    return -0.5 * torch.sum(torch.pow(mean, 2)
+                            + var - 1.0 - logvar,
+                            dim=[1])
+
+```
+
