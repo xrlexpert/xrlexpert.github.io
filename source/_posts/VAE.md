@@ -122,9 +122,9 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 
 ![reconstruction](/img/VAE/reconstruct.png)
 
-通常一个MSE即可
+将高斯分布带入化简可得MSE：
 $$
-L2(x, p_{\theta}(x|z))
+L2(x, u_{\theta}(z))
 $$
 
 
