@@ -27,7 +27,6 @@ DDPM前提假设：
   p_{\theta}(x_{0:T}) = p_{\theta}(x_T)\prod_{t=T}^{1} p_{\theta}(x_{t-1}|x_t)
   $$
   
-
 * 定义加噪过程 ： $q(x_t|x_{t-1}) = \mathcal N(x_t;\sqrt{1-\beta_t}x_{t-1}, \beta_t I)$
 
 * 损失函数:
@@ -49,7 +48,7 @@ DDPM的具体推导详见xyfson学长的blog:[DDPM](https://xyfjason.top/blog-ma
 
 ## Motivation
 
-![](/img/diffusion/ddim.png)
+![](/img/diffusion/DDIM.png)
 
 * 注意到DDPM由于马可夫链假设的限制，反向传播时不得不一步步预测，导致反向预测的时间步往往很长，**速度很慢**
 * DDPM中的损失函数中并没有直接出现我们的假设$q(x_t|x_{t-1})$
