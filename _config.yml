@@ -106,5 +106,5 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/xrlexpert/xrlexpert.github.io
+  repo: git@github.com:xrlexpert/xrlexpert.github.io.git
   branch: main
