@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xrlexpert.github.io/img/project/gpt/gpt.png">
 <meta property="article:published_time" content="2025-02-05T05:06:37.000Z">
-<meta property="article:modified_time" content="2025-02-05T12:17:06.730Z">
+<meta property="article:modified_time" content="2025-02-05T13:21:01.201Z">
 <meta property="article:author" content="Hirox">
 <meta property="article:tag" content="LLM">
 <meta name="twitter:card" content="summary_large_image">
@@ -235,7 +235,7 @@
         
         
         
-          122 分钟
+          124 分钟
         
       </span>
     
@@ -494,10 +494,13 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <li>
 <p>但在本项目的实现中由于引进了<code>grad_accum_steps</code>, 希望loss累积不断add<code>grad_accum_steps</code>后才进行梯度更新，因此需要额外利用<code>require_backward_grad_sync</code>控制DDP的梯度更新</p>
 </li>
+<li>
+<p>对于原模型的保存，如果使用<code>torch.compile</code>，要在调用前就保存<code>raw_model</code>,否则参数名会带有前缀<code>_orig_mod</code><sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="How to save/load a model with torch.compile - PyTorch Forums https://discuss.pytorch.org/t/how-to-save-load-a-model-with-torch-compile/179739">[4]</span></a></sup></p>
+</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> step <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(max_steps):<br>  <span class="hljs-keyword">for</span> micro_step <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(grad_accum_steps):<br>      <span class="hljs-comment"># only require sync on the last micro-step</span><br>      model.require_backward_grad_sync = (micro_step == grad_accum_steps - <span class="hljs-number">1</span>)<br><br>      <span class="hljs-built_in">input</span>, target = train_loader.next_batch()<br>      <span class="hljs-built_in">input</span>, target = <span class="hljs-built_in">input</span>.to(device), target.to(device)<br>      logits = model(<span class="hljs-built_in">input</span>)<br>      loss = F.cross_entropy(logits.view(-<span class="hljs-number">1</span>, logits.size(-<span class="hljs-number">1</span>)), target.view(-<span class="hljs-number">1</span>))<br>      loss = loss / grad_accum_steps<br>      loss.backward() <span class="hljs-comment"># 将loss反向传播累积，直到model.require_backward_grad_sync为True时，才进行梯度更新</span><br>   optimizer.step()<br>   lr_scheduler.step()<br></code></pre></td></tr></table></figure>
 <ol start="3">
-<li><strong>分布式训练保存权重的方式</strong></li>
+<li><strong>分布式训练保存权重的方式<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="Hongyu Sun's Blog: PyTorch save and load DDP model https://auniquesun.github.io/2022-04-13-pytorch-save-and-load-for-DDP-model/">[5]</span></a></sup></strong></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.save(raw_model.state_dict(), <span class="hljs-string">&#x27;best_model.pth&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <ul>
@@ -511,7 +514,9 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Andrejkarpathy, build-nanogpt: Video+code lecture on building nanoGPT from scratch <a target="_blank" rel="noopener" href="https://github.com/karpathy/build-nanogpt">https://github.com/karpathy/build-nanogpt</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>torchrun (Elastic Launch) — PyTorch 2.6 documentation <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/elastic/run.html">https://pytorch.org/docs/stable/elastic/run.html</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span>rasbt/LLMs-from-scratch: Implement a ChatGPT-like LLM in PyTorch from scratch, step by step <a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch">https://github.com/rasbt/LLMs-from-scratch</a>
-<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span>How to save/load a model with torch.compile - PyTorch Forums <a target="_blank" rel="noopener" href="https://discuss.pytorch.org/t/how-to-save-load-a-model-with-torch-compile/179739">https://discuss.pytorch.org/t/how-to-save-load-a-model-with-torch-compile/179739</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span>Hongyu Sun’s Blog: PyTorch save and load DDP model <a target="_blank" rel="noopener" href="https://auniquesun.github.io/2022-04-13-pytorch-save-and-load-for-DDP-model/">https://auniquesun.github.io/2022-04-13-pytorch-save-and-load-for-DDP-model/</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
