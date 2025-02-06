@@ -237,7 +237,7 @@ class MultiHeadAttention(nn.Module):
 
 ### 权重初始化(_init_weights)
 
-* 权重初始化一般符合正态分布，均值$u$为0，标准差$\sigma$为$\frac{1}{\sqrt{Dimension}}= \frac{1}{\sqrt{768}}=0.36$ (0.02是一个合理的值，因为我们这里复现的size是small)
+* 权重初始化一般符合正态分布，均值$u$为0，标准差$\sigma$为$\frac{1}{\sqrt{Dimension}}= \frac{1}{\sqrt{768}}=0.036$ (0.02是一个合理的值，因为我们这里复现的size是small)
 * 对于有残差的网络模块，通常会额外增加一个乘积因子$\frac{1}{N}$来初始化权重为$\frac{1}{N*Dimension}$
   * 其中$N$是残差的次数
 
@@ -251,7 +251,7 @@ for i in range(n):
 print(x.std())
 ```
 
-* 你会发现x从最初的0，增长到了$\sqrt{100}$左右，因为假设每个$\epsilon ∼N(0,1)$
+* 你会发现x从最初的0，增长到了$\sqrt{100}$左右，假设每个$\epsilon ∼N(0,1)$
 
 * 根据方差的线性性质：
   $$
@@ -267,7 +267,7 @@ print(x.std())
 
   $std(x)= \sqrt{n}$
 
-* 故对于残差网络层（见下图TransfomerBlock架构，实际上就是多头注意力的最后一层和FFN的最后一层），我们需要额外设置因子来初始化权重。（`2 * self.cfg["n_layers"]`是因为一个transformerblock中有两个残差次数）
+* 故对于残差网络层（见上图TransfomerBlock架构，实际上就是多头注意力的最后一层和FFN的最后一层），我们需要额外设置因子来初始化权重。（`2 * self.cfg["n_layers"]`是因为一个transformerblock中有两个残差次数）
 
 ```python
   if hasattr(module, 'NANOGPT_SCALE_INIT'):
