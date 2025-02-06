@@ -4,7 +4,7 @@ index_img: /img/banner/machine_learning.jpg
 date: 2024-10-19 13:54:47
 tags:
 categories:
-- [ML]
+- [Machine learning]
 ---
 
 

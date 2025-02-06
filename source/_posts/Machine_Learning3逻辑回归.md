@@ -4,7 +4,7 @@ index_img: /img/banner/machine_learning.jpg
 date: 2024-05-30 22:21:47
 tags:
 categories:
-- [ML]
+- [Machine learning]
 ---
 
 # 逻辑回归

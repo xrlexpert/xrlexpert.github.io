@@ -4,7 +4,7 @@ date: 2023-04-08 18:57:51
 tags:
 - solidity
 categories:
-- 大一立项
+- 技术学习
 index_img: /img/banner/blockchain.jpg
 ---
 
