@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" href="/img/favicon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hirox">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Baseline 矩阵乘法朴素实现 1234567for(int i &#x3D; 0;i &lt; M; i++)&#123;    for(int j &#x3D; 0;j &lt; N; j++)&#123;        for(int k &#x3D; 0;k &lt; K; k++)&#123;            C[i][j] &#x3D; A[i][k] * B[k][j];        &#125;    &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Parallel Processing">
+<meta property="og:url" content="https://xrlexpert.github.io/2024/12/29/Parallel_Processing/index.html">
+<meta property="og:site_name" content="Hirox&#39;s blog">
+<meta property="og:description" content="Baseline 矩阵乘法朴素实现 1234567for(int i &#x3D; 0;i &lt; M; i++)&#123;    for(int j &#x3D; 0;j &lt; N; j++)&#123;        for(int k &#x3D; 0;k &lt; K; k++)&#123;            C[i][j] &#x3D; A[i][k] * B[k][j];        &#125;    &amp;#1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xrlexpert.github.io/img/tinyml/tinyml.png">
+<meta property="article:published_time" content="2024-12-29T07:54:11.000Z">
+<meta property="article:modified_time" content="2025-02-06T01:35:57.155Z">
+<meta property="article:author" content="Hirox">
+<meta property="article:tag" content="Efficient AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xrlexpert.github.io/img/tinyml/tinyml.png">
+  
+  
+  
+  <title>Parallel Processing - Hirox&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xrlexpert.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hirox&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Parallel Processing"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-29 15:54" pubdate>
+          2024年12月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Parallel Processing</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Baseline">Baseline</h2>
+<p>矩阵乘法朴素实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; M; i++)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j &lt; N; j++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>;k &lt; K; k++)&#123;<br>            C[i][j] = A[i][k] * B[k][j];<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当数组默认按行优先存储时<br>
+假设cache中的一个块能够装下数组的一行</p>
+<p>朴素算法的miss次数约为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>+</mo><mi>M</mi><mi>N</mi><mi>K</mi></mrow><annotation encoding="application/x-tex">M + MNK</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">MN</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span></p>
+<ul>
+<li>A矩阵每换一次行就要cache miss一次</li>
+<li>B矩阵k每加一次都要换</li>
+</ul>
+<p>通过调整循环顺序，减少cache missing的次数</p>
+<h2 id="Method-1-loop-reorder">Method 1 loop reorder</h2>
+<p><img src="/img/tinyml/loop_reorder.png" srcset="/img/loading.gif" lazyload alt="loop reorder"></p>
+<p>最简单的修改方式，优先以B的行来遍历。遍历顺序由<code>ijk</code>变为<code>ikj</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; M; i++)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>;k &lt; K; k++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j &lt; M; j++)&#123;<br>            C[i][j] = A[i][k] * B[k][j];<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>miss次数：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>+</mo><mi>M</mi><mi>K</mi></mrow><annotation encoding="application/x-tex">M + MK</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span></p>
+<h2 id="Method-2-loop-tilling">Method 2 loop tilling</h2>
+<p>假设cache中的一个cache块一次不能装入一行怎么办？<br>
+那就装入能装的大小呗，不妨设置为TILE_SIZE</p>
+<p><img src="/img/tinyml/loop_tilling1.png" srcset="/img/loading.gif" lazyload alt="loop tilling"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-type">j_t</span> = <span class="hljs-number">0</span>; <span class="hljs-type">j_t</span> &lt; N; <span class="hljs-type">j_t</span> += TILE_SIZE) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; N; ++k) &#123;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-type">j_t</span>; j &lt; <span class="hljs-type">j_t</span> + Tj &amp;&amp; j &lt; N; ++j)&#123;<br>                    C[i][j] += A[i][k] * B[k][j];<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>上述只是考虑其中的一个cache块。</p>
+<p>进一步地，如果整个cache缓存的大小，不足以装入矩阵的NxTILE_SIZE，我们一次就计算TILE_SIZExTILE_SIZE进一步减少cache miss的次数</p>
+<p><img src="/img/tinyml/loop_tilling2.png" srcset="/img/loading.gif" lazyload alt="loop tilling"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-type">i_t</span> = <span class="hljs-number">0</span>; <span class="hljs-type">i_t</span> &lt; N; <span class="hljs-type">i_t</span> += TILE_SIZE) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-type">k_t</span> = <span class="hljs-number">0</span>; <span class="hljs-type">k_t</span> &lt; N; <span class="hljs-type">k_t</span> += TILE_SIZE) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-type">j_t</span> = <span class="hljs-number">0</span>; <span class="hljs-type">j_t</span> &lt; N; <span class="hljs-type">j_t</span> += TILE_SIZE) &#123;<br>            <span class="hljs-comment">// Tile the loops for i, k, j</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-type">i_t</span>; i &lt; <span class="hljs-type">i_t</span> + TILE_SIZE &amp;&amp; i &lt; N; ++i) &#123;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-type">k_t</span>; k &lt; <span class="hljs-type">k_t</span> + TILE_SIZE &amp;&amp; k &lt; N; ++k) &#123;<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-type">j_t</span>; j &lt; <span class="hljs-type">j_t</span> + TILE_SIZE &amp;&amp; j &lt; N; ++j) &#123;<br>                        C[i][j] += A[i][k] * B[k][j];<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="Method-3-loop-unrolling">Method 3 loop unrolling</h2>
+<p>通过循环展开，将循环体复制多次，从而减少循环迭代的次数。例如，原本循环迭代 100 次，展开后可能只迭代 25 次，每次迭代执行 4 次循环体的操作。</p>
+<p>减少分支预测错误：由于循环次数减少，分支预测错误的机会也相应减少，从而提高了执行效率。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; M; i++)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>;k &lt; K; k++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j &lt; M; j+=<span class="hljs-number">4</span>)&#123;<br>            C[i][j]     = A[i][k] * B[k][j];<br>            C[i][j + <span class="hljs-number">1</span>] = A[i][k] * B[k][j + <span class="hljs-number">1</span>];<br>            C[i][j + <span class="hljs-number">2</span>] = A[i][k] * B[k][j + <span class="hljs-number">2</span>];<br>            C[i][j + <span class="hljs-number">3</span>] = A[i][k] * B[k][j + <span class="hljs-number">3</span>];<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Method-4-SISD-programming">Method 4 SISD programming</h2>
+<p>SISD意为一条指令执行多条数据</p>
+<p>SSE（Streaming SIMD Extensions）是 Intel 提供的一种指令集扩展，用于加速多媒体和科学计算等任务。它通过 SIMD（Single Instruction, Multiple Data，单指令多数据）技术，允许一条指令同时处理多个数据，从而提高计算效率。</p>
+<p>有以下三个接口：<br>
+_mm_load_ps / _mm_mul_ps / _mm_add_ps 解释</p>
+<ol>
+<li><strong>_mm_load_ps</strong></li>
+</ol>
+<ul>
+<li><strong>功能</strong>：加载 128 位（16 字节）的单精度浮点数（<code>float</code>）到 SSE 寄存器。</li>
+<li><strong>解释</strong>：
+<ul>
+<li><code>_mm</code>：表示这是 SSE 指令集的函数。</li>
+<li><code>load</code>：表示加载数据。</li>
+<li><code>ps</code>：表示 <strong>packed single-precision</strong>，即打包的单精度浮点数（<code>float</code>）。</li>
+</ul>
+</li>
+<li><strong>示例</strong>：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">__m128 vec = _mm_load_ps(<span class="hljs-type">float</span>* ptr);<br></code></pre></td></tr></table></figure>
+这会将 <code>ptr</code> 指向的内存中的 4 个 <code>float</code> 值（共 128 位）加载到 SSE 寄存器 <code>vec</code> 中。</li>
+</ul>
+<ol start="2">
+<li><strong>_mm_mul_ps</strong></li>
+</ol>
+<ul>
+<li><strong>功能</strong>：对两个 128 位的单精度浮点数向量进行逐元素相乘。</li>
+<li><strong>解释</strong>：
+<ul>
+<li><code>mul</code>：表示乘法操作。</li>
+<li><code>ps</code>：表示打包的单精度浮点数。</li>
+</ul>
+</li>
+<li><strong>示例</strong>：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">__m128 result = _mm_mul_ps(vec1, vec2);<br></code></pre></td></tr></table></figure>
+这会将 <code>vec1</code> 和 <code>vec2</code> 中的 4 个 <code>float</code> 值逐元素相乘，结果存储在 <code>result</code> 中。</li>
+</ul>
+<ol start="3">
+<li><strong>_mm_add_ps</strong></li>
+</ol>
+<ul>
+<li><strong>功能</strong>：对两个 128 位的单精度浮点数向量进行逐元素相加。</li>
+<li><strong>解释</strong>：
+<ul>
+<li><code>add</code>：表示加法操作。</li>
+<li><code>ps</code>：表示打包的单精度浮点数。</li>
+</ul>
+</li>
+<li><strong>示例</strong>：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">__m128 result = _mm_add_ps(vec1, vec2);<br></code></pre></td></tr></table></figure>
+这会将 <code>vec1</code> 和 <code>vec2</code> 中的 4 个 <code>float</code> 值逐元素相加，结果存储在 <code>result</code> 中。</li>
+</ul>
+<p>同样的AVX2指令集也有类似接口：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-number">1.</span> __m256 w_vec = _mm256_loadu_ps(&amp;w[i * n + j]); <span class="hljs-comment">// 一次加载 8 个 float</span><br><span class="hljs-number">2.</span> __m256 x_vec = _mm256_loadu_ps(&amp;x[j]);         <span class="hljs-comment">// 一次加载 8 个 float</span><br><span class="hljs-number">3.</span> sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(w_vec, x_vec)); <span class="hljs-comment">// 一次计算 8 个 float 的乘加</span><br></code></pre></td></tr></table></figure>
+<p>llama2.c 使用Openmp + AVX加速矩阵乘法代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;immintrin.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;omp.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">matmul</span><span class="hljs-params">(<span class="hljs-type">float</span>* xout, <span class="hljs-type">float</span>* x, <span class="hljs-type">float</span>* w, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> d)</span> </span>&#123;<br>    <span class="hljs-type">int</span> vector_width = <span class="hljs-number">8</span>;<br>    <br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> omp parallel for</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; d; i++) &#123;<br>        <span class="hljs-type">float</span> val = <span class="hljs-number">0.0f</span>;<br>        <br>        <span class="hljs-type">int</span> j;<br>        __m256 sum_vec = _mm256_setzero_ps(); <span class="hljs-comment">//初始化为0</span><br>        <br>        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j + vector_width &lt;= n; j += vector_width) &#123;<br>            __m256 w_vec = _mm256_loadu_ps(&amp;w[i * n + j]);<br>            __m256 x_vec = _mm256_loadu_ps(&amp;x[j]);<br>            sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(w_vec, x_vec)); <span class="hljs-comment">//每次计算8个元素</span><br>        &#125;<br>        <br>        <span class="hljs-type">float</span> sum_array[<span class="hljs-number">8</span>];<br>        _mm256_storeu_ps(sum_array, sum_vec);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; <span class="hljs-number">8</span>;i++)&#123;<br>            val += sum_array[i];    <span class="hljs-comment">//计算总和</span><br>        &#125;<br>        <span class="hljs-keyword">for</span> (; j &lt; n; j++) &#123;<br>            val += w[i * n + j] * x[j];<br>        &#125;<br>        <br>        xout[i] = val;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Method-5-CUDA-programming">Method 5 CUDA programming</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hpcwiki.io/gpu/cuda/">CUDA入门教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zhi6YrE7z/?spm_id_from=333.999.0.0&amp;vd_source=55e11d1872644841c85ff366cdd4d2d0">使用共享内存优化矩阵乘法视频讲解</a></li>
+</ul>
+<h2 id="Im2col-Convolution">Im2col Convolution</h2>
+<p>将卷积操作变为矩阵乘法<br>
+具体而言针对一个MxN的矩阵，和一个核大小为KxK的卷积核来讲，滑动窗口移动次数(M-K+1)(N-K+1)。每次固定滑动窗口后，都是卷积核和对应矩阵窗口进行逐元素对应乘积最后再求和。这个操作和一个行向量和列向量内积是等价的。<br>
+<img src="/img/tinyml/im2conv.png" srcset="/img/loading.gif" lazyload alt="Im2col"><br>
+<img src="/img/tinyml/im2conv2.png" srcset="/img/loading.gif" lazyload alt="Im2col"><br>
+故我们可以将滑动窗口对应的矩阵窗口平铺为一个列向量，将卷积核平铺为一个行向量，二者内积便是单次计算结果。整个卷积操作等价于(M-K+1)(N-K+1)个列向量形成的矩阵以及对应卷积核形成矩阵的乘积<br>
+<img src="/img/tinyml/im2conv3.png" srcset="/img/loading.gif" lazyload alt="Im2col"></p>
+<ul>
+<li>优点：可以使用矩阵乘法的高效算法</li>
+<li>缺点：存储矩阵的内存开销增大，原来MxN,现在是(M-K+1)(N-K+1) x (KxK)</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://sahnimanas.github.io/post/anatomy-of-a-high-performance-convolution/">代码实现</a></p>
+<h2 id="In-place-Depth-wise-Convolution">In-place Depth-wise Convolution</h2>
+<p>Peak Memory（峰值内存）问题</p>
+<p>在普通的 Depth-wise Convolution 操作中：<br>
+每次卷积会产生一个新的输出张量。这个新的输出张量需要额外的内存来存储，导致模型运行时的峰值内存需求较高，尤其是对于高分辨率输入或多层网络时会放大问题。</p>
+<p>In-place 策略的核心是直接在现有的内存块（如输入张量）上进行更新，而不额外分配新的内存块。对于计算的中间结果使用一个缓存区buffer保存<br>
+<img src="/img/tinyml/in_place.png" srcset="/img/loading.gif" lazyload alt="in_place"></p>
+<h2 id="Winograd-Convolution">Winograd Convolution</h2>
+<p>一种加速卷积操作的数学算法(建立在乘法操作慢于加法操作的前提假设上)</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hsqyc/article/details/116136385">讲解连接</a></p>
+<ul>
+<li>推导不必掌握，只需知道公式即可</li>
+</ul>
+<h2 id="Others">Others</h2>
+<p>point-wise Convolution</p>
+<ul>
+<li>单个卷积核为1x1xC，且对所有通道都要作用</li>
+<li>使用NHWC的格式存储输入矩阵,保证访问的连续性。</li>
+</ul>
+<p><img src="/img/tinyml/point_wise_conv.png" srcset="/img/loading.gif" lazyload alt="point-wise-conv"></p>
+<p>depth-wise Convolution</p>
+<ul>
+<li>单个卷积核大小为KxKx1,只对一个通道作用，不同通道之间独立且使用不同卷积核处理</li>
+<li>使用NCHW格式存储输入矩阵,保证访问的连续性。</li>
+</ul>
+<p><img src="/img/tinyml/depth_wise_conv.png" srcset="/img/loading.gif" lazyload alt="depth-wise-conv"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Efficient-AI/">#Efficient AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Parallel Processing</div>
+      <div>https://xrlexpert.github.io/2024/12/29/Parallel_Processing/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hirox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/10/Server%E9%85%8D%E7%BD%AE/" title="服务器环境搭建">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">服务器环境搭建</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/07/DDIM/" title="从DDPM到DDIM">
+                        <span class="hidden-mobile">从DDPM到DDIM</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
