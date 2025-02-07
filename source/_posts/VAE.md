@@ -62,13 +62,17 @@ $P(X) = \int_z P(X|z)P(z)dz$
 我们采用对数最大似然估计的方式，求解生成器$g$的参数$\theta$
 
 $$
-L(\theta) = \sum _x logp_{\theta}(x) =\sum_x log\int_z p_{\theta}(x|z)q(z)dz
+L(\theta) = \sum _x logp_{\theta}(x) =\sum_x log\int_z p_{\theta}(x|z)p(z)dz
 $$
-其中：
+其中 $p(z)$ 是 $x$ 对应隐变量$z$ 的真实分布，与$x$有关
+
+但由于我们不知道$p(z)$, 所以不妨**引入一个可控简单的分布** $q(z) = N(0,I)$ , 来代替，且该$q(z)$与$x$并无关系
+
+改写为：
 $$
 \begin{align*}
 \log p_{\theta}(x) 
-&= \int_z q(z) \log p_{\theta}(x|z) \, dz \\
+&= \int_z q(z) \log p_{\theta}(x) \, dz \\
 &= \int_z q(z) \cdot \log \left[ \frac{p_{\theta}(x|z) p(z)}{p_{\theta}(z|x)} \cdot \frac{q(z)}{q(z)} \right] dz \\
 &= \int_z q(z) \big[ \log p_{\theta}(x|z) + \log \frac{p(z)}{q(z)} + \log \frac{q(z)}{p_{\theta}(z|x)} \big] dz \\
 &= \underbrace{\mathbb{E}_{z \sim q(z)} \log p_{\theta}(x|z) 
