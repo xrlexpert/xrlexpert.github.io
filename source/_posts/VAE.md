@@ -82,11 +82,11 @@ $$
 
 学长已经说的很好了
 
-[链接](https://xyfjason.top/blog-main/2022/08/23/EM%E7%AE%97%E6%B3%95/)
+[EM Algorithm - xyfJASON](https://xyfjason.top/blog-main/2022/08/23/EM-Algorithm/)
 
 总结EM
 
-- E-step：取$q(z) = p_\theta(z|x)$,此时KL等于0
+- E-step：取$q(z) = p_\theta(z|x)$,注意这里赋值的是解析式而不是最后的z，此时KL等于0
 
 - M-step: 固定q(z),优化$\theta$，最大化ELBO
 
