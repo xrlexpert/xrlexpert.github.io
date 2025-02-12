@@ -66,19 +66,28 @@ L(\theta) = \sum _x logp_{\theta}(x) =\sum_x log\int_z p_{\theta}(x|z)p(z)dz
 $$
 其中 $p(z)$ 是 $x$ 对应隐变量$z$ 的真实分布，与$x$有关
 
-但由于我们不知道$p(z)$, 所以不妨**引入一个可控简单的分布** $q(z) = N(0,I)$ , 来代替，且该$q(z)$与$x$并无关系
+但由于我们不知道$p(z)$, 所以不妨**引入一个可控简单的分布** $q(z)$ , 来代替，且该$q(z)$与$x$并无关系
 
 改写为：
 $$
 \begin{align*}
+\log p_{\theta}(x)  = \int_z q(z) \log p_{\theta}(x) \, dz 
+\end{align*}
+$$
+
+* 注意：上式对任何分布$q(z)$ 均成立，与$q(z)$ 具体是什么分布并没有关系
+
+$$
+\begin{align*}
 \log p_{\theta}(x) 
 &= \int_z q(z) \log p_{\theta}(x) \, dz \\
-&= \int_z q(z) \cdot \log \left[ \frac{p_{\theta}(x|z) p(z)}{p_{\theta}(z|x)} \cdot \frac{q(z)}{q(z)} \right] dz \\
-&= \int_z q(z) \big[ \log p_{\theta}(x|z) + \log \frac{p(z)}{q(z)} + \log \frac{q(z)}{p_{\theta}(z|x)} \big] dz \\
+&= \int_z q(z) \cdot \log \left[ \frac{p_{\theta}(x|z) p_{\theta}(z)}{p_{\theta}(z|x)} \cdot \frac{q(z)}{q(z)} \right] dz \\
+&= \int_z q(z) \big[ \log p_{\theta}(x|z) + \log \frac{p_{\theta
+}(z)}{q(z)} + \log \frac{q(z)}{p_{\theta}(z|x)} \big] dz \\
 &= \underbrace{\mathbb{E}_{z \sim q(z)} \log p_{\theta}(x|z) 
-- D_{\text{KL}}(q(z) \| p(z))}_{\text{ELBO}} 
+- D_{\text{KL}}(q(z) \| p_{\theta}(z))}_{\text{ELBO}} 
 + \underbrace{D_{\text{KL}}(q(z) \| p_{\theta}(z|x))}_{\text{KL}} \\
-&\geq \big[ \mathbb{E}_{z \sim q(z)} \log p_{\theta}(x|z) - D_{\text{KL}}(q(z) \| p(z)) \big] \quad \text{(ELBO)}
+&\geq \big[ \mathbb{E}_{z \sim q(z)} \log p_{\theta}(x|z) - D_{\text{KL}}(q(z) \| p_{\theta}(z)) \big] \quad \text{(ELBO)}
 \end{align*}
 $$
 
@@ -100,8 +109,6 @@ $$
 
 ![explaination](/img/VAE/gpt.png)
 
-- 注意上图中$p_{\theta}(z) = p(z)$
-
 - 但E-step很巧妙在于，当我们**固定$\theta$时**，$logp_{\theta }(x)$**是固定的**，即 $ELBO + KL$ 固定。
 
 - 虽然我们无法直接求出令KL = 0的$p_\theta(z|x)$的解析解,但是我们可以**通过最大化ELBO来隐式地最小化KL**，从而使得我们的q(z)逼近$p_\theta(z|x)$的最优解。
@@ -114,9 +121,9 @@ $$
 
 - M-step：固定$q(z)$,优化$\theta$，最大化ELBO
 
-我们将$q(z)$进一步写为用参数$\phi$ 表示的$q_{\phi} (z|x)$这就是VAE中的encoder
+又因为最开始的推导与$q(z)$无关，任何分布均可以，我们可以将$q(z)$进一步写为用参数$\phi$ 表示的$q_{\phi} (z|x)$这就是VAE中的encoder
 
-同时令$p_{\theta}(z)$为我们的先验分布$N(0,I)$
+同时假设$x$对应的$p(z)$符合先验分布$N(0,I)$
 
 - 由于两个都是最大化ELBO，且在使用梯度下降法时每次更新都是基于上一次的参数做调整，与这里的固定异曲同工。故VAE的Loss函数可以写为-ELBO
 
