@@ -16,24 +16,24 @@
   <meta name="author" content="Hirox">
   <meta name="keywords" content="">
   
-    <meta name="description" content="远程桌面 由于种种原因，需要借助服务器的GPU，但同时也需要GUI界面。在此记录一下配置Ubuntu22.04服务器远程桌面的详细过程，避免后人踩坑。 服务器端 本人采用TigerVnc，按需也可以使用 Todesk(目前版本对终端用户不友好) 首先，检查服务器是否下载常见的图形化桌面。 1dpkg -l | grep -E &quot;gnome|kde|xfce|mate|cinnamon|l">
+    <meta name="description" content="大一总结 前言 不知不觉间在哈深已经度过一年了，嘿嘿嘿。这是在18年以来第一次尝试做一些和自己感兴趣的事情，非常开心。在此希望多年后的自己看到这些会觉得这四年没白过。 目录  大一上 大一下 暑假  大一上 大一进校就被高中的几个好朋友拉进学校的vex机器人战队打工，这段经历是我没法忘却的，战队里的学长学姐都太优秀了，人也超级超级好。在此特别感谢冬阳，隆斌学长，带着我快速上手了c语言,git,ma">
 <meta property="og:type" content="article">
-<meta property="og:title" content="服务器环境搭建">
-<meta property="og:url" content="https://xrlexpert.github.io/2025/01/10/Server%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:title" content="大一总结">
+<meta property="og:url" content="https://xrlexpert.github.io/2023/06/25/Summary/index.html">
 <meta property="og:site_name" content="Hirox&#39;s blog">
-<meta property="og:description" content="远程桌面 由于种种原因，需要借助服务器的GPU，但同时也需要GUI界面。在此记录一下配置Ubuntu22.04服务器远程桌面的详细过程，避免后人踩坑。 服务器端 本人采用TigerVnc，按需也可以使用 Todesk(目前版本对终端用户不友好) 首先，检查服务器是否下载常见的图形化桌面。 1dpkg -l | grep -E &quot;gnome|kde|xfce|mate|cinnamon|l">
+<meta property="og:description" content="大一总结 前言 不知不觉间在哈深已经度过一年了，嘿嘿嘿。这是在18年以来第一次尝试做一些和自己感兴趣的事情，非常开心。在此希望多年后的自己看到这些会觉得这四年没白过。 目录  大一上 大一下 暑假  大一上 大一进校就被高中的几个好朋友拉进学校的vex机器人战队打工，这段经历是我没法忘却的，战队里的学长学姐都太优秀了，人也超级超级好。在此特别感谢冬阳，隆斌学长，带着我快速上手了c语言,git,ma">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xrlexpert.github.io/img/banner/server.png">
-<meta property="article:published_time" content="2025-01-10T07:58:22.000Z">
-<meta property="article:modified_time" content="2025-02-05T05:10:12.701Z">
+<meta property="og:image" content="https://xrlexpert.github.io/img/banner/life.jpg">
+<meta property="article:published_time" content="2023-06-25T11:11:49.000Z">
+<meta property="article:modified_time" content="2025-02-05T05:20:28.762Z">
 <meta property="article:author" content="Hirox">
-<meta property="article:tag" content="server environment">
+<meta property="article:tag" content="大学生活">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://xrlexpert.github.io/img/banner/server.png">
+<meta name="twitter:image" content="https://xrlexpert.github.io/img/banner/life.jpg">
   
   
   
-  <title>服务器环境搭建 - Hirox&#39;s blog</title>
+  <title>大一总结 - Hirox&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="服务器环境搭建"></span>
+            <span id="subtitle" data-typed-text="大一总结"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-10 15:58" pubdate>
-          2025年1月10日 下午
+        <time datetime="2023-06-25 19:11" pubdate>
+          2023年6月25日 晚上
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.4k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          13 分钟
+          12 分钟
         
       </span>
     
@@ -273,55 +273,57 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">服务器环境搭建</h1>
+            <h1 style="display: none">大一总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="远程桌面">远程桌面</h2>
-<p>由于种种原因，需要借助服务器的GPU，但同时也需要GUI界面。在此记录一下配置Ubuntu22.04服务器远程桌面的详细过程，避免后人踩坑。</p>
-<h3 id="服务器端">服务器端</h3>
-<p>本人采用TigerVnc，按需也可以使用 Todesk(目前版本对终端用户不友好)</p>
-<p>首先，检查服务器是否下载常见的图形化桌面。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">dpkg -l | grep -E &quot;gnome|kde|xfce|mate|cinnamon|lxde|lxqt&quot;<br></code></pre></td></tr></table></figure>
-<p>若未下载，下载对应的图形化界面。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install ubuntu-gnome-desktop<br></code></pre></td></tr></table></figure>
-<p>下载Tigervnc</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install tigervnc-standalone-server<br></code></pre></td></tr></table></figure>
-<p>创建Vnc用户的密码</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vncpasswd<br></code></pre></td></tr></table></figure>
+                <h1>大一总结</h1>
+<h2 id="前言">前言</h2>
+<p>不知不觉间在哈深已经度过一年了，嘿嘿嘿。这是在18年以来第一次尝试做一些和自己感兴趣的事情，非常开心。在此希望多年后的自己看到这些会觉得这四年没白过。</p>
+<h2 id="目录">目录</h2>
 <ul>
-<li>输入6-8位密码，若超过8位会自动截断。</li>
-<li>中途会问是否配置桌面为read-only，按照自己需要yes/no即可</li>
+<li><a href="#%E5%A4%A7%E4%B8%80%E4%B8%8A">大一上</a></li>
+<li><a href="#%E5%A4%A7%E4%B8%80%E4%B8%8B">大一下</a></li>
+<li><a href="#%E6%9A%91%E5%81%87">暑假</a></li>
 </ul>
-<p>用户的Vnc配置文件放在用户的<code>~/.vnc/xstartup</code>中</p>
-<p>对xstartup文件配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim ~/.vnc/xstartup<br></code></pre></td></tr></table></figure>
-<p>若使用<code>gnome</code>图形化桌面（ubuntu最常见），添加如下内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-built_in">export</span> XKL_XMODMAP_DISABLE=1<br><span class="hljs-built_in">export</span> XDG_CURRENT_DESKTOP=<span class="hljs-string">&quot;GNOME-Flashback:GNOME&quot;</span><br><span class="hljs-built_in">export</span> XDG_MENU_PREFIX=<span class="hljs-string">&quot;gnome-flashback-&quot;</span><br>gnome-session --session=gnome-flashback-metacity --disable-acceleration-check<br></code></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> xstartup <br><span class="hljs-comment">#!/bin/sh</span><br><span class="hljs-comment"># Start Gnome 3 Desktop </span><br>[ -x /etc/vnc/xstartup ] &amp;amp;&amp;amp; <span class="hljs-built_in">exec</span> /etc/vnc/xstartup<br>[ -r <span class="hljs-variable">$HOME</span>/.Xresources ] &amp;amp;&amp;amp; xrdb <span class="hljs-variable">$HOME</span>/.Xresources<br>vncconfig -iconic &amp;amp;<br>dbus-launch --exit-with-session gnome-session<br></code></pre></td></tr></table></figure>
+<h2 id="大一上">大一上</h2>
+<p>大一进校就被高中的几个好朋友拉进学校的vex机器人战队打工，这段经历是我没法忘却的，战队里的学长学姐都太优秀了，人也超级超级好。在此特别感谢冬阳，隆斌学长，带着我快速上手了c语言,git,markdown等知识，也初步了解了机器人软件开发的部分内容。最后在大一下快开学的时候由于想和朋友一起转入算法竞赛最终退出了（虽然自己真的很不舍），希望战队越来越好！</p>
+<p>在这一期间也了解到了csdiy这个自学指南，上了深专一学期的课，除了ygq的高数，pwj的集合论，其余都相当于自学。果真应证了那句话：大学==自学。这一学期学分绩自认为也比较努力了，但排名仍旧很拉跨，保研线边缘，但相比于卷学分绩我更想知道自己喜欢计算机的哪个领域方向，所以继续做自己就好。</p>
 <ul>
-<li>注意这里末尾并没有添加&amp;, 具体原因见 <a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1375111/vncserver-exited-too-early">https://askubuntu.com/questions/1375111/vncserver-exited-too-early</a></li>
+<li>集合论与图论 94：由于疫情拖到放假后返校才考试，考试前两三周便开始看ppt和学长写的笔记+往年卷，最终算是考得还行</li>
+<li>程序设计语言 93：期末90都没上，可能自己部分的知识点还没掌握扎实，复习就看了ppt+做往年题</li>
+<li>代数与几何 91：个人觉得考试难度其实不大，但就是容易扣细节上的分，现在已经忘得差不多了。复习就看书+做题</li>
+<li>微积分 85：高数没有一次是0失误的，鉴于分值5分一道，稍微忽视一点细节就被扣一分，唉，果然我还是不适合考试。</li>
 </ul>
-<p>之后便可以创建桌面啦，</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vncserver -localhost no<br></code></pre></td></tr></table></figure>
+<h2 id="大一下">大一下</h2>
+<p>这个学期退出战队后有很多课余时间，上半学期先自学了一些算法并做洛谷，参加校内程序设计竞赛拿了三等奖（但和年级大佬的差距还不小，还不够努力啊），鉴于后半学期很忙，便没有再刷洛谷了，寒假准备全身心投入试试。</p>
+<p>五一和家里人一起去了趟广州，不得不说广东的早茶是真的好吃！</p>
+<p>自学了一下cs61b但介于项目代码量有点大+和学校内容近似+英语能力不行，最终鸽了，寒假有时间做做。</p>
+<p>6月15号过生，和好朋友一起吃了顿饭，收到很多朋友的祝福，很开心。然而就在这一天后遇到了一些不可描述的事情影响自己心情，期末也没按照计划复习好，很是难受，“帮助别人前，避免自己落入深渊”。估计这学期的学分绩又要–，但没关系，下学期再冲！</p>
 <ul>
-<li>vncserver默认创建时只有本地能连，对我们来讲这当然没用，所以添加参数<code>-localhost no</code></li>
+<li>数据结构 84：期末78，自己写了正正一个月的考研题没想到是这个结果。碍于手写代码+对试卷题量认识不清晰，没做完，最后30分大题草草结束，对于试卷本身的题目我就不想评价了。</li>
+<li>近代史 84：正常，第一次没经验，自己写了一大堆笔记最终效率贼低，还不如只听串讲。下次千万注意这种考试就死盯着<strong>串讲</strong>复习就行了，面向串讲考试，一周复习即可。</li>
+<li>物理 86：期末81，由于复习不到位导致选填错误很多</li>
+<li>高数Ⅱ 92：期中27，期末45。期末复习了四天，没想到是我所有科目中考的最好的…只能说大学考试的付出和回报不成正比，同时果然还是数学爱我啊…</li>
 </ul>
-<p>顺利的话shell会弹出对应vncserver的编号信息。vnc采用端口号位<code>590*</code>, 若为1，则对应端口号<code>5901</code>,vpcserver地址就是<code>&lt;服务器ip&gt;:5901</code>,其中<code>&lt;服务器ip&gt;</code>填入ssh连接远程服务器时的ip即可</p>
-<p>删除桌面</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vncserver -kill :1<br></code></pre></td></tr></table></figure>
-<h3 id="客户端">客户端</h3>
-<p>下载RealVNC: <a target="_blank" rel="noopener" href="https://www.realvnc.com/en/connect/download/viewer/">Download VNC Viewer by RealVNC®</a>)</p>
-<p>安装过程中一路默认next。完成后填入vpcserver地址，以及服务器创建vnc对应的密码即可。</p>
-<h2 id="VPN">VPN</h2>
-<p>采用<strong>反向端口转发</strong>的方式</p>
-<p>本地：如使用7897作为代理端口，具体在本地的clash中查看</p>
-<p><img src="/img/Server/clash.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -NR 11804:127.0.0.1:7897 username@ip_address -v<br></code></pre></td></tr></table></figure>
-<p>服务器：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> http_proxy=http://127.0.0.1:11804/<br><span class="hljs-built_in">export</span> https_proxy=http://127.0.0.1:11804/<br></code></pre></td></tr></table></figure>
+<h2 id="暑假">暑假</h2>
+<p>目标：</p>
+<ul>
+<li>学习python+概率论，为数模做准备</li>
+<li>算法竞赛训练，打打周赛</li>
+<li>学习雅思，把英语补一补（其实主要考自学，重在坚持）</li>
+<li>学习DDCA，预计耗时四周</li>
+<li>学习前端，完成大一立项</li>
+</ul>
+<p>才发现事情真的好多啊…希望自己能如期完成吧，毕竟这只是为你未来探寻方向的第一步</p>
+<h2 id="总结">总结</h2>
+<p>考试经验方面，我发现每个学科考试的重难点都不一样。</p>
+<ol>
+<li>思政：考前一周对着串讲背即可</li>
+<li>数学：建议是课后按时完成作业，及时总结，日常需要刷题和练手。</li>
+<li>算法，数据结构等：正确的做法是面向<strong>往年试卷</strong>复习，上课认真听讲把关键概念搞懂，认真完成作业即可，重点就是往年题</li>
+</ol>
 
                 
               </div>
@@ -340,7 +342,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="category-chain-item">环境配置</a>
+  <a href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" class="category-chain-item">生活随笔</a>
   
   
 
@@ -355,7 +357,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/server-environment/">#server environment</a>
+        <a href="/tags/%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%B4%BB/">#大学生活</a>
       
     </div>
   
@@ -367,8 +369,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>服务器环境搭建</div>
-      <div>https://xrlexpert.github.io/2025/01/10/Server配置/</div>
+      <div>大一总结</div>
+      <div>https://xrlexpert.github.io/2023/06/25/Summary/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +382,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年1月10日</div>
+          <div>2023年6月25日</div>
         </div>
       
       
@@ -412,9 +414,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/02/05/Build-nanoGPT/" title="Build nanoGPT">
+                      <a href="/2023/06/28/Python/" title="Python">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Build nanoGPT</span>
+                        <span class="hidden-mobile">Python</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -422,8 +424,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/29/Parallel_Processing/" title="Parallel Processing">
-                        <span class="hidden-mobile">Parallel Processing</span>
+                      <a href="/2023/04/08/Solidity/" title="Solidity学习">
+                        <span class="hidden-mobile">Solidity学习</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
