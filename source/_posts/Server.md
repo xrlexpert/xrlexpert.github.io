@@ -26,7 +26,7 @@ dpkg -l | grep -E "gnome|kde|xfce|mate|cinnamon|lxde|lxqt"
 若未下载，下载对应的图形化界面。
 
 ```shell
-sudo apt install ubuntu-gnome-desktop
+sudo apt install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal ubuntu-desktop
 ```
 
 下载Tigervnc
@@ -76,7 +76,11 @@ dbus-launch --exit-with-session gnome-session
 
 * 注意这里末尾并没有添加&, 具体原因见 https://askubuntu.com/questions/1375111/vncserver-exited-too-early
 
-之后便可以创建桌面啦，
+```shell
+sudo chmod a+x ~/.vnc/xstartup
+```
+
+之后便可以创建桌面啦
 
 ```shell
 vncserver -localhost no
