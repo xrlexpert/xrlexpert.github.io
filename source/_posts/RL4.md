@@ -118,11 +118,21 @@ Policy 算法需要已知 $p(r|s,a), p(s^{'}|s,a)$，来求解出状态价值，
 
 如果我们不能已知$p(r|s,a), p(s^{'}|s,a)$的model，那该如何计算？
 
+{% note warning %}
+
+注意这里是不知道model具体的概率分布，但我们还是可以和model交互得到状态转移和奖励
+
+{% endnote %}
+
 这就属于**Model free**算法，即**只有数据，而没有这些数据的真实分布**。
 
-**蒙特卡罗（Monte Carlo）basic算法**即利用大数定律，利用数据进行Mean estimation
+**蒙特卡罗（Monte Carlo）basic算法**即利用大数定律，利用数据进行对动作状态价值做Mean estimation
 
-已知当前的策略$\pi$ 后，选择每一对$(s,a)$根据当前策略模拟大量episode (单个episode的长度理论上越长越好)，求return，最后计算平均，对$p(r|s,a), p(s^{'}|s,a)$进行估计。
+已知当前的策略$\pi$ 后，选择每一对$(s,a)$根据当前策略模拟大量episode (单个episode的长度理论上越长越好)，求return，最后计算平均，对动作状态价值进行更新，最后通过贪婪或者$\epsilon - greedy$ 得到最优策略
+$$
+q_{\pi_k}(s, a) = \mathbb{E}[G_t | S_t = s, A_t = a] \approx \frac{1}{n} \sum_{i=1}^{n} g_{\pi_k}^{(i)}(s, a).
+$$
+
 
 ## MC Exploring Starts算法
 

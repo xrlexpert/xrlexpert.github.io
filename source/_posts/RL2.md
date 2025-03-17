@@ -93,7 +93,7 @@ $$
 
 ### 数学公式
 
-状态值函数 $v_\pi(s)$ 定义为从状态 $s $ 开始，遵循策略 $\pi $ 的期望回报（Expected Return）：
+状态值函数 $v_\pi(s)$ 定义为从状态 $s$ 开始，遵循策略 $\pi$ 的期望回报（Expected Return）：
 $$
 v_\pi(s) = \mathbb{E}[G_t \mid S_t = s]
 $$

@@ -90,3 +90,26 @@ $$
 $$
 w_{k+1} = w_k - a_k g(w_k,  \eta_k) =  w_k - \alpha_k(w_k - x_k)
 $$
+
+## 随机梯度下降
+
+SGD在机器学习中可谓是广泛使用，其问题定义如下：
+$$
+min_w{J(w)} = \mathbb E[f(w,x)]
+$$
+一个直接的想法就是使用梯度下降法
+$$
+w_{k + 1} = w_k - \alpha_k(\Delta_wJ(w)) =  w_k - \alpha_k(\mathbb E[\Delta f(w,x)])
+$$
+然而通常来讲$x$的概率分布我们无法得知，所以依靠大数定律来进行平均估计
+$$
+E[\Delta f(w,x)] \approx \frac{1}{n} \sum_{i=1}^n \Delta f(w,x_i)
+$$
+公式进一步转化为：
+$$
+w_{k+1} = w_k - \frac{\alpha_k}{n}\sum_{i=1}^n \Delta f(w,x_i)
+$$
+然而上述公式每迭代一次需要遍历所有的samples，事实上我们可以每有一个sample就迭代一次，将原始$\mathbb E[\Delta f(w,x)]$变为一个随机的$\Delta f(w,x_k)$, 这就是随机梯度下降**SGD**的核心思想
+$$
+w_{k+1} = w_k - \alpha_k \Delta f(w,x_k)
+$$
