@@ -238,7 +238,7 @@
       
       <a class="index-excerpt " href="/2025/03/04/RL6/" target="_self">
         <div>
-          时序差分方法(TD)  相较于蒙特卡洛采样一整个episode后才对策略进行更新，时序差分每执行一步即可更新值函数  朴素的时序差分方法：仅依靠数据而非模型来估计在给定policy的状态价值，相当于从数据的角度求解贝尔曼最优公式 vt+1(st)=vt(st)−αt(st)[vt(st)−(rt+1+γvt(st+1))],vt+1(s)=vt(s),for all s≠st,\begin{ali
+          朴素TD  相较于蒙特卡洛采样一整个episode后才对策略进行更新，时序差分每执行一步即可更新值函数  朴素的时序差分方法：依靠数据而非模型，遵循给定policy的计算特定状态的状态价值 vt+1(st)=vt(st)−αt(st)[vt(st)−(rt+1+γvt(st+1))],vt+1(s)=vt(s),for all s≠st,\begin{align} v_{t+1}(s_t) &am
         </div>
       </a>
 
