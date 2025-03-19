@@ -153,3 +153,28 @@ q(s,a) = \mathbb E_{s, R\sim environment}[R + \gamma \max_{a \in \mathcal A(s_{t
 $$
 
 * 其期望与当前策略无关，因此可以离线收集数据，然后再进行更新，不要求**”数据和策略同时进步“**
+
+
+
+## 统一理解
+
+上述算法都可以写成如下形式：
+$$
+q_{t+1}(s,a) = q_t(s,a) - \alpha_t(q_t(s,a) - \bar{q_t}) \tag{3}
+$$
+
+| Algorithm    | Expression of the TD target $\bar{q}_t$ in (3)               |
+| ------------ | ------------------------------------------------------------ |
+| SARSA        | $\bar{q}_t = r_{t+1} + \gamma q_t(s_{t+1}, a_{t+1})$         |
+| n-step SARSA | $\bar{q}_t = r_{t+1} + \gamma r_{t+2} + \dots + \gamma^n q_t(s_{t+n}, a_{t+n})$ |
+| Q-learning   | $\bar{q}_t = r_{t+1} + \gamma \max_a q_t(s_{t+1}, a)$        |
+| Monte Carlo  | $\bar{q}_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \dots$ |
+
+
+
+| Algorithm    | Equation to be solved                                        |
+| ------------ | ------------------------------------------------------------ |
+| SARSA        | $\text{BE: } q_\pi(s, a) = \mathbb{E}\left[ R_{t+1} + \gamma q_\pi(S_{t+1}, A_{t+1}) {\|}S_t = s, A_t = a \right]$ |
+| n-step SARSA | $\text{BE: } q_\pi(s, a) = \mathbb{E}[ R_{t+1} + \gamma R_{t+2} + \dots + \gamma^n q_\pi(S_{t+n}, A_{t+n}) {\|}S_t = s, A_t = a ]$ |
+| Q-learning   | $\text{BOE: } q(s, a) = \mathbb{E}\left[ R_{t+1} + \gamma \max_a q(S_{t+1}, a) {\|}S_t = s, A_t = a \right]$ |
+| Monte Carlo  | $\text{BE: } q_\pi(s, a) = \mathbb{E}[ R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots {\|}S_t = s, A_t = a ]$ |
