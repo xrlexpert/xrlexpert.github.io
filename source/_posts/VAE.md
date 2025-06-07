@@ -91,6 +91,14 @@ $$
 \end{align*}
 $$
 
+{% note success %}
+
+KL散度用于衡量一个分布$p$，与参考分布$q$的不同
+
+$$D_{KL}(p||q) = \mathbb E_{p(x) }log[\frac{p(x)}{q(x)}]$$
+
+{% endnote %}
+
 ### EM算法
 
 学长已经说的很好了
@@ -127,7 +135,7 @@ $$
 
 - 由于两个都是最大化ELBO，且在使用梯度下降法时每次更新都是基于上一次的参数做调整，与这里的固定异曲同工。故VAE的Loss函数可以写为-ELBO
 
-$\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x|z) + D_{kl}(q_{\phi}(z)||p(z))$
+$\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x|z) + D_{KL}(q_{\phi}(z|x)||p(z))$
 
 - 重构项：
 
@@ -135,7 +143,7 @@ $\mathcal{L}_{\theta, \phi}(x)= -ELBO = -E_{z\sim q_{\phi}(z|x)} logp_{\theta}(x
 
 将高斯分布带入化简可得MSE：
 $$
-L2(x, u_{\theta}(z))
+MSE(x, u_{\theta}(z))
 $$
 
 
@@ -352,3 +360,14 @@ def loss_KL_wo_E(output):
 
 ```
 
+## 思考
+
+$loss$中的两个部分**重构损失**和**先验约束**
+
+* **重构损失**保证不同$x$学习到的$p_{\theta}(z|x)$具有区分度，不至于每个都$N(0,I)$和一样，这样生成的图片就完全相同了
+* **先验约束**保证学习到的$p_{\theta}(z|x)$是一个简单可控的正态分布，使得采样操作更加稳定，例如生成介于两个输入样本之间的新数据（如人脸图像的渐变）
+
+问题：
+
+* 当真实的$p_{\theta}(z|x)$后验分布不是一个正态分布,导致误差
+* 重构损失使得模型输出倾向于输出平均，限制了模型对复杂数据分布，造成图像模糊

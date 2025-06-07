@@ -45,12 +45,12 @@ KC 在得知所有的 *n* 种调料后，作为曾经的化竞之神的他，马
 
 * 得到结论：
   
-    $\begin{cases}
-  & \text 存在一种方案使得\sum_{n}^{m} (a_{i}-x) \ge 0 & \text{ if } x\le ans \\\\
-  & \text 不存在一种方案使得\sum_{n}^{m} (a_{i}-x) \ge 0  & \text{ if } x>ans
-  \end{cases}$
-
-
+    $$
+  \begin{cases}
+  & \exists \text{ scheme }st.  \sum_{n}^{m} (a_{i}-x) \ge 0 & \text{ if } x\le ans \\\\
+  & \nexists \text{ scheme }st.\sum_{n}^{m} (a_{i}-x) \ge 0  & \text{ if } x>ans
+  \end{cases}
+  $$
 
 而这道题中分母为 $\sum_{n}^{m}c_{i}$  ,我们转化为存在一个方案 $x\sum_{n}^{m}c_{i}-\sum_{n}^{m} a_{i}<0$ ，贪心得到最小值再与0比较判断
 
@@ -143,8 +143,8 @@ dp+二分
 得到结论
 
 $\begin{cases}
-  & \text 存在一种方案使得max(\sum_{n}^{m}b[i])\ge0 & \text{ if } x\le ans \\\\
-  & \text 不存在一种方案使得max(\sum_{n}^{m}b[i])\ge0  & \text{ if } x>ans
+  & \exists \text{ scheme }st.max(\sum_{n}^{m}b[i])\ge0 & \text{ if } x\le ans \\\\
+  & \nexists \text{ scheme }st.max(\sum_{n}^{m}b[i])\ge0  & \text{ if } x>ans
 \end{cases}$
 
 * 处理平均数：每个数减去x，转化为求和大于等于0
@@ -200,8 +200,8 @@ int judge_mid(int x)
 
 **关键**：每次枚举k，
 
-* 求最大值：若$k<=题目中的定义$，则存在方案  , k继续变大
-* 求最小值：若$k>=题目中的定义$，则存在方案，k继续变小
+* 求最大值：若$k<= condition$，则存在方案  , k继续变大
+* 求最小值：若$k>=condition$，则存在方案，k继续变小
 
 
 

@@ -1,6 +1,6 @@
 ---
 layout: pages
-title: RL4 从Model based 到 Model free的MC算法
+title: RL4 策略迭代算法和MC算法
 index_img: /img/banner/rl.png 
 date: 2025-02-12 14:57:20
 tags:
